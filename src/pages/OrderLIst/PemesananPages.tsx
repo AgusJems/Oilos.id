@@ -1,12 +1,12 @@
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import ComponentCard from "../../components/common/ComponentCard";
 import PageMeta from "../../components/common/PageMeta";
-import PemesananTable from "../../components/orderlist/PemesananTable";
+import PemesananTable from "../../components/admin-page/order-list/PemesananTable";
 import { useModal } from "../../hooks/useModal";
 import { Modal } from "../../components/ui/modal";
 import Button from "../../components/ui/button/Button";
 
-export default function Pemesanan() {
+export default function PemesananPages() {
   const { isOpen, openModal, closeModal } = useModal();
   return (
     <>

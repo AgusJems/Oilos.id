@@ -6,13 +6,17 @@ import {
   BoxCubeIcon,
   CalenderIcon,
   ChevronDownIcon,
+  DocsIcon,
+  FolderIcon,
   GridIcon,
+  GroupIcon,
   HorizontaLDots,
   ListIcon,
   PageIcon,
   PieChartIcon,
   PlugInIcon,
   TableIcon,
+  TimeIcon,
   UserCircleIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
@@ -32,9 +36,34 @@ const navItems: NavItem[] = [
     path: "/",
   },
   {
-    icon: <ListIcon />,
+    icon: <TimeIcon />,
     name: "Pemesanan",
     path: "/pemesanan",
+  },
+  {
+    icon: <ListIcon />,
+    name: "Berita",
+    path: "/berita",
+  },
+  {
+    icon: <BoxCubeIcon />,
+    name: "List Barang",
+    path: "/listbarang",
+  },
+  {
+    icon: <FolderIcon />,
+    name: "Hasil Uji",
+    path: "/hasiluji",
+  },
+  {
+    icon: <DocsIcon />,
+    name: "Testimoni",
+    path: "/testimoni",
+  },
+  {
+    icon: <GroupIcon />,
+    name: "List Member",
+    path: "/listmember",
   },
   {
     icon: <CalenderIcon />,

@@ -19,7 +19,12 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import Pemesanan from "./pages/OrderLIst/Pemesanan";
+import BeritaPages from "./pages/Berita/BeritaPages";
+import PemesananPages from "./pages/OrderLIst/PemesananPages";
+import ListBarangPages from "./pages/ItemList/ListBarangPages";
+import HasilUjiPages from "./pages/HasilUji/HasilUjiPages";
+import TestimoniPages from "./pages/Testimoni/TestimoniPages";
+import ListMemberPages from "./pages/ListMenber/ListMemberPages";
 
 export default function App() {
   return (
@@ -37,7 +42,17 @@ export default function App() {
             <Route path="/blank" element={<Blank />} />
 
             {/* Order List */}
-            <Route path="/pemesanan" element={<Pemesanan />} />
+            <Route path="/pemesanan" element={<PemesananPages />} />
+            {/* Berita */}
+            <Route path="/berita" element={<BeritaPages />} />
+            {/* List Barang */}
+            <Route path="/listbarang" element={<ListBarangPages />} />
+            {/* Hasil Uji */}
+            <Route path="/hasiluji" element={<HasilUjiPages />} />
+            {/* Testimoni */}
+            <Route path="/testimoni" element={<TestimoniPages />} />
+            {/* List Member */}
+            <Route path="/listmember" element={<ListMemberPages />} />
 
             {/* Forms */}
             <Route path="/form-elements" element={<FormElements />} />
