@@ -68,7 +68,7 @@ const Service: React.FC = () => {
               key={id}
               data-aos="fade-up"
               data-aos-delay={aosDelay}
-              className="max-w-[300px] group rounded-2xl bg-white dark:bg-gray-800 dark:hover:bg-green-500 hover:bg-green-500 hover:text-white duration-300 shadow-xl"
+              className="max-w-[300px] group rounded-2xl bg-white dark:bg-gray-800 dark:hover:bg-green-600 hover:bg-green-600 hover:text-white duration-300 shadow-xl"
             >
               <div className="p-4 text-center">
                 <img

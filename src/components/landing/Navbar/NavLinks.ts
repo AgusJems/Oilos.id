@@ -18,39 +18,22 @@ export const NavLinks: NavLinkItem[] = [
   },
   {
     id: 2,
-    name: "Layanan",
-    link: "/layanan",
-    // submenu: [
-    //   { name: "Sejarah", link: "/profile/story" },
-    //   { name: "Visi dan Misi", link: "/profile/visi-misi" },
-    //   { name: "Indikator Mutu", link: "/profile/quality-indicators" },
-    // ],
+    name: "Tentang",
+    link: "/tentangland",
   },
   {
     id: 3,
-    name: "Tentang",
-    link: "/tentang",
+    name: "Hasil Uji",
+    link: "/hasilujiland",
   },
   {
     id: 4,
-    name: "Kemitrann",
-    link: "/kemitraan",
-    // submenu: [
-    //   { name: "Rawat Jalan", link: "/ourservice/outpatient" },
-    //   { name: "Rawat Darurat", link: "/ourservice/emergency-care" },
-    //   { name: "Rawat Inap", link: "/ourservice/inpatient" },
-    //   { name: "Penunjang", link: "/ourservice/support" },
-    //   { name: "Anni`mah Resto", link: "/ourservice/annimah-resto" },
-    // ],
+    name: "Testimoni",
+    link: "/testimoniland",
   },
   {
     id: 5,
-    name: "Blog",
-    link: "/blog",
-  },
-  {
-    id: 6,
     name: "Daftar Member",
-    link: "/member",
+    link: "/memberland",
   },
 ];
