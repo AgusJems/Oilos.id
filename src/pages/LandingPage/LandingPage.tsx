@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Navbar from "../../components/landing/Navbar/Navbar";
 import Service from "../../components/landing/OurService/Service";
+import Banner from "../../components/landing/Banner/Banner";
 
 const LandingPage: React.FC = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const LandingPage: React.FC = () => {
       <Navbar/>
       <Hero handleOrderPopup={() => console.log("Popup dibuka")} />
       <Service/>
+      <Banner/>
     </div>
   );
 };

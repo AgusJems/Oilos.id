@@ -54,10 +54,10 @@ const Service: React.FC = () => {
       <div className="container">
         {/* Header Section */}
         <div data-aos="fade-up" className="max-w-[800px] mx-auto text-center mb-20">
-          <h1 className="text-xl sm:text-2xl lg:text-6xl font-[Sans-serif] font-bold mb-5">Oilos telah memberikan manfaat lebih ke ribuan pelanggan di seluruh Indonesia</h1>
+          <h1 className="text-xl sm:text-2xl lg:text-6xl font-[Sans-serif] font-bold mb-5"><span className="font-[Merienda] text-green-600">Oilos</span> telah memberikan manfaat lebih ke ribuan pelanggan di seluruh Indonesia</h1>
           <p className="text-lg text-gray-400">
-            Oilos adalah sebuah produk zat aditif organik (berbahan cair), untuk membersihkan Bahan Bakar Minyak (BBM) baik bensin ataupun solar, sehingga kualitas BBM menjadi lebih bersih dan berkualitas. 
-            Efek yang dihasilkan: akselerasi kendaraan lebih meningkat, pembakaran lebih sempurna (Irit BBM), dan emisi gas buang rendah (ramah lingkungan).
+            Oilos berfungsi untuk meningkatkan akselerasi kendaraan yaitu dengan cara menaikkan kualitas bahan bakar, serta membersihkan ruang bakar. 
+            Oilos tidak akan meninggalkan residu atau ampas pada tangki kendaraan walaupun dipakai dalam jangka waktu panjang.
           </p>
         </div>
 
