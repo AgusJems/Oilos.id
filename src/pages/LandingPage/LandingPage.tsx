@@ -18,8 +18,8 @@ const LandingPage: React.FC = () => {
     <div className="dark:bg-dark dark:text-white">
       <Navbar/>
       <Hero handleOrderPopup={() => console.log("Popup dibuka")} />
-      <Service/>
       <Banner/>
+      <Service/>
     </div>
   );
 };
