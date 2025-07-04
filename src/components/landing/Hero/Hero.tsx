@@ -37,7 +37,7 @@ const ImageList: ImageItem[] = [
 ];
 
 const bgStyle: React.CSSProperties = {
-  backgroundImage: `url(${'images/cards/card-01.jpg'})`,
+  backgroundImage: `url(${'images/cards/card-04.jpg'})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -74,7 +74,7 @@ const Hero: React.FC<HeroProps> = ({ handleOrderPopup }) => {
                       data-aos="zoom-out"
                       data-aos-duration="500"
                       data-aos-once="true"
-                      className="text-5xl sm:text-6xl lg:text-7xl font-bold"
+                      className="text-5xl sm:text-6xl lg:text-7xl font-bold font-[Sans-serif]"
                     >
                       {data.title}
                     </h1>
@@ -89,12 +89,8 @@ const Hero: React.FC<HeroProps> = ({ handleOrderPopup }) => {
                     <div
                       data-aos="fade-up"
                       data-aos-duration="500"
-                      data-aos-delay="300"
-                    >
-                      <button
-                        onClick={handleOrderPopup}
-                        className="bg-gradient-to-r from-green-700 to-green-400 hover:scale-105 duration-200 text-white py-2 px-4 rounded-full"
-                      >
+                      data-aos-delay="300">
+                      <button onClick={handleOrderPopup} className="bg-gradient-to-r from-green-500 to-green-400 hover:scale-105 duration-200 text-white py-2 px-4 rounded-full">
                         Read More
                       </button>
                     </div>
