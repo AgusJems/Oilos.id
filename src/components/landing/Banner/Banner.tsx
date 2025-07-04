@@ -1,9 +1,12 @@
 import React from 'react';
-import { GrCheckmark } from 'react-icons/gr';
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import { IoWalletSharp } from "react-icons/io5";
+import { GiFoodTruck } from "react-icons/gi";;
+import { GrWorkshop  } from "react-icons/gr";;
 
 const Banner: React.FC = () => {
   return (
-    <div className="min-h-[550px] bg-white dark:bg-dark text-black dark:text-white flex justify-center items-center py-20 sm:py-0">
+    <div className="min-h-[550px] bg-white dark:bg-black text-black dark:text-white flex justify-center items-center py-20 sm:py-0">
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
           {/* image section */}
@@ -29,19 +32,19 @@ const Banner: React.FC = () => {
             </p>
             <div className="flex flex-col gap-4">
               <div data-aos="fade-up" className="flex items-center gap-4">
-                <GrCheckmark className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
+                <IoCheckmarkDoneSharp className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
                 <p>Quality Products</p>
               </div>
               <div data-aos="fade-up" className="flex items-center gap-4">
-                <GrCheckmark className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
+                <GiFoodTruck className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
                 <p>Fast Delivery</p>
               </div>
               <div data-aos="fade-up" className="flex items-center gap-4">
-                <GrCheckmark className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
+                <IoWalletSharp className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
                 <p>Easy Payment Method</p>
               </div>
               <div data-aos="fade-up" className="flex items-center gap-4">
-                <GrCheckmark className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
+                <GrWorkshop  className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
                 <p>Get Offers</p>
               </div>
             </div>
