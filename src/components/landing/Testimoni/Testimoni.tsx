@@ -76,7 +76,7 @@ const Testimonial: React.FC = () => {
   };
 
   return (
-    <div className="py-8 justify-items-center mb-10">
+    <div className="py-10 justify-items-center mb-10">
       <div className="container">
         {/* Header section */}
         <div className="text-center mb-10 max-w-[600px] mx-auto">

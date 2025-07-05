@@ -70,7 +70,7 @@ const News: React.FC = () => {
   };
 
   return (
-    <div className="py-8 justify-items-center">
+    <div className="py-10 justify-items-center">
       <div className="container">
         {/* Header Section */}
         <div className="text-center mb-10 max-w-[600px] mx-auto">
@@ -102,14 +102,6 @@ const News: React.FC = () => {
           </Slider>
         </div>
 
-        {/* CTA Button */}
-        <div className="flex justify-center">
-          <a href="/newspage">
-            <button className="bg-gradient-to-r from-gdtwo to-gdone text-white px-6 py-3 rounded-full hover:scale-105 duration-200 mt-10">
-              View All News
-            </button>
-          </a>
-        </div>
       </div>
     </div>
   );

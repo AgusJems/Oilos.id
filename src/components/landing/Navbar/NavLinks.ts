@@ -14,7 +14,7 @@ export const NavLinks: NavLinkItem[] = [
   {
     id: 1,
     name: "Home",
-    link: "/",
+    link: "/landing",
   },
   {
     id: 2,
