@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
@@ -26,8 +26,15 @@ import HasilUjiPages from "./pages/HasilUji/HasilUjiPages";
 import TestimoniPages from "./pages/Testimoni/TestimoniPages";
 import ListMemberPages from "./pages/ListMember/ListMemberPages";
 import HasilUji from "./components/landing/TestResult/HasilUji";
+import LandingLayout from "./layout/LandingLayout";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function App() {
+   useEffect(() => {
+      AOS.init({ offset: 100, duration: 600, easing: "ease-in-sine", delay: 100 });
+    }, []);
   return (
     <>
       <Router>
@@ -77,8 +84,11 @@ export default function App() {
           {/* Auth Layout */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/landing" element={<LandingPage />} />
-          <Route path="/hasilujiland" element={<HasilUji />} />
+
+          <Route element={<LandingLayout />}>
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/hasilujiland" element={<HasilUji />} />
+          </Route>
 
           {/* Fallback Route */}
           <Route path="*" element={<NotFound />} />
