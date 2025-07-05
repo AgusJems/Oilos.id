@@ -70,12 +70,12 @@ const Navbar: React.FC = () => {
                 </div>
                 
                 <div className="hidden md:flex gap-3">
-                    <button className="bg-gradient-to-r from-green-500 to-green-400 hover:scale-105 duration-200 text-white py-2 px-4 rounded-full">
+                    <a href="/signin" className="cursor-pointer bg-gradient-to-r from-green-500 to-green-400 hover:scale-105 duration-200 text-white py-2 px-4 rounded-full">
                         Sign In
-                    </button>
-                    <button className="bg-gradient-to-r from-green-500 to-green-400 hover:scale-105 duration-200 text-white py-2 px-4 rounded-full">
+                    </a>
+                    <a href="/signup" className="cursor-pointer bg-gradient-to-r from-green-500 to-green-400 hover:scale-105 duration-200 text-white py-2 px-4 rounded-full">
                         Daftar Member
-                    </button>
+                    </a>
                 </div>
 
                 {/* Menu Mobile */}
