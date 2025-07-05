@@ -10,6 +10,9 @@ import Service from "../../components/landing/OurService/Service";
 import Banner from "../../components/landing/Banner/Banner";
 import Safety from "../../components/landing/Safety/Safety";
 import Patner from "../../components/landing/Patner/Patner";
+import News from "../../components/landing/OurNews/Berita";
+import Testimonial from "../../components/landing/Testimoni/Testimoni";
+import Footer from "../../components/landing/Footer/Footer";
 
 const LandingPage: React.FC = () => {
   useEffect(() => {
@@ -24,6 +27,9 @@ const LandingPage: React.FC = () => {
       <Service/>
       <Safety/>
       <Patner/>
+      <News/>
+      <Testimonial/>
+      <Footer/>
     </div>
   );
 };

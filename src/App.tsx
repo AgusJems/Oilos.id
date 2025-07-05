@@ -24,7 +24,7 @@ import PemesananPages from "./pages/OrderLIst/PemesananPages";
 import ListBarangPages from "./pages/ItemList/ListBarangPages";
 import HasilUjiPages from "./pages/HasilUji/HasilUjiPages";
 import TestimoniPages from "./pages/Testimoni/TestimoniPages";
-import ListMemberPages from "./pages/ListMenber/ListMemberPages";
+import ListMemberPages from "./pages/ListMember/ListMemberPages";
 
 export default function App() {
   return (

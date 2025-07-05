@@ -26,7 +26,7 @@ const PatnerData: PatnerItem[] = [
 
 const Patner: React.FC = () => {
   return (
-    <div className="bg-green-100 p-8 mb-12 justify-items-center">
+    <div className="bg-gray-100 p-8 mb-12 justify-items-center">
       <div className="container">
         {/* Header section */}
         <div className="text-center mb-10 max-w-[600px] mx-auto">
