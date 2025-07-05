@@ -25,6 +25,7 @@ import ListBarangPages from "./pages/ItemList/ListBarangPages";
 import HasilUjiPages from "./pages/HasilUji/HasilUjiPages";
 import TestimoniPages from "./pages/Testimoni/TestimoniPages";
 import ListMemberPages from "./pages/ListMember/ListMemberPages";
+import HasilUji from "./components/landing/TestResult/HasilUji";
 
 export default function App() {
   return (
@@ -77,6 +78,7 @@ export default function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/landing" element={<LandingPage />} />
+          <Route path="/hasilujiland" element={<HasilUji />} />
 
           {/* Fallback Route */}
           <Route path="*" element={<NotFound />} />
