@@ -1,53 +1,57 @@
-import React from 'react';
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import { IoWalletSharp } from "react-icons/io5";
-import { GiFoodTruck } from "react-icons/gi";;
-import { GrWorkshop  } from "react-icons/gr";;
+import React from 'react';;
 
 const HasilUji: React.FC = () => {
   return (
-    <div className="min-h-[550px] bg-white dark:bg-black text-black dark:text-white flex justify-center items-center py-20 sm:py-0">
+    <div className="bg-white dark:bg-black text-black dark:text-white p-8 justify-items-center">
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-          {/* image section */}
-          <div data-aos="zoom-in">
-            <img
-              src="/images/cards/slides-1.png"
-              alt="Oilos"
-              className="max-w-[500px] h-[350px] w-full mx-auto drop-shadow-[-10px_10px_12px_rgba(0,0,0,1)] object-cover"
-            />
+        <div>
+          {/* Header section */}
+          <div className="max-w-[1200px] mx-auto">
+            <h1 data-aos="fade-up" className="text-3xl font-bold dark:text-black mb-5">
+              Video Uji Dyno Test
+            </h1>
+            <p className="text-lg text-gray-400">
+              Riset dilakukan di DTRT Magelang workshop. Motor yang digunakan adalah Honda Scoopy standar bawaan dari pabrik. Metode pengetesan dilakukan menggunakan Dyno Test. 
+              Cara melakukan tesnya yaitu menggunakan kendaraan yang sama dengan bahan bakar normal di atas mesin Dyno, kemudian menambahkan Oilos pada bahan bakar, dan terakhir mengganti aki standar bawaan pabrik dengan aki Edcobatt.
+            </p>
+          </div>
+          {/* video section */}
+          <div data-aos="zoom-in" className="overflow-hidden rounded-lg aspect-ratio py-10">
+            <iframe
+              src="https://www.oilos.id/wp-content/uploads/2023/12/vid3.mp4"
+              title="YouTube video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="max-w-[1200px] h-[500px] w-full mx-auto"
+            ></iframe>
           </div>
 
-          {/* text details section */}
-          <div className="flex flex-col justify-center gap-6 sm:pt-0">
-            <h1 data-aos="fade-up" className="text-3xl sm:text-4xl font-bold">
-              Apa Itu <span className='font-[Merienda] text-green-600'>Oilos ?</span> 
+          <div className="mb-10 max-w-[1200px] mx-auto">
+            <h1 data-aos="fade-up" className="text-3xl font-bold dark:text-black mb-5">
+              Grafik Uji Dyno Test
             </h1>
-            <p
-              data-aos="fade-up"
-              className="text-md text-gray-500 tracking-wide leading-7"
-            >
-              Oilos adalah sebuah produk zat aditif organik (berbahan cair), untuk membersihkan Bahan Bakar Minyak (BBM) baik bensin ataupun solar, sehingga kualitas BBM menjadi lebih bersih dan berkualitas. 
-              Efek yang dihasilkan: akselerasi kendaraan lebih meningkat, pembakaran lebih sempurna (Irit BBM), dan emisi gas buang rendah (ramah lingkungan).
+            <p className="text-base sm:text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+              Dari data grafik yang menggunakan HP (Horse Power/Tenaga Kuda), motor standar menghasilkan <strong>5,95 HP → 6,56 HP</strong>. 
+              Setelah ditambah Oilos: <strong>6,89 HP → 6,93 HP</strong> (<em>meningkat sekitar 0.5 HP</em>). 
+              Setelah ditambah Oilos dan mengganti aki dengan Edcobatt: <strong>6,78 HP → 6,87 HP</strong> 
+              (<em>meningkat 0,4 HP dari standar bawaan</em>, namun <em>turun 0,08 HP</em> dibanding hasil uji dengan aki standar).
             </p>
-            <div className="flex flex-col gap-4">
-              <div data-aos="fade-up" className="flex items-center gap-4">
-                <IoCheckmarkDoneSharp className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
-                <p>Quality Products</p>
-              </div>
-              <div data-aos="fade-up" className="flex items-center gap-4">
-                <GiFoodTruck className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
-                <p>Fast Delivery</p>
-              </div>
-              <div data-aos="fade-up" className="flex items-center gap-4">
-                <IoWalletSharp className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
-                <p>Easy Payment Method</p>
-              </div>
-              <div data-aos="fade-up" className="flex items-center gap-4">
-                <GrWorkshop  className="text-4xl h-13 w-13 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
-                <p>Get Offers</p>
-              </div>
-            </div>
+          </div>
+
+          <div data-aos="zoom-in" className='py-8'>
+            <img
+              src="/images/brand/test-1.jpg"
+              alt="Oilos"
+              className="max-w-[1200px] w-full mx-auto"
+            />
+          </div>
+          <div data-aos="zoom-in" className='py-8'>
+            <img
+              src="/images/brand/test-2.jpg"
+              alt="Oilos"
+              className="max-w-[1200px] w-full mx-auto"
+            />
           </div>
         </div>
       </div>
