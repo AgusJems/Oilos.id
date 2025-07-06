@@ -1,14 +1,14 @@
 // src/pages/LandingPage/LandingPage.tsx
 import React from "react";
-import Hero from "../../components/landing/Hero/Hero";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Service from "../../components/landing/OurService/Service";
-import Banner from "../../components/landing/Banner/Banner";
-import Safety from "../../components/landing/Safety/Safety";
-import Patner from "../../components/landing/Patner/Patner";
-import News from "../../components/landing/OurNews/Berita";
-import Testimonial from "../../components/landing/Testimoni/Testimoni";
+import Hero from "../../landing/Hero/Hero";
+import Banner from "../../landing/Banner/Banner";
+import Service from "../../landing/OurService/Service";
+import Safety from "../../landing/Safety/Safety";
+import Patner from "../../landing/Patner/Patner";
+import News from "../../landing/OurNews/Berita";
+import Testimonial from "../../landing/Testimoni/Testimoni";
 
 const LandingPage: React.FC = () => {
   return (

@@ -25,11 +25,11 @@ import ListBarangPages from "./pages/ItemList/ListBarangPages";
 import HasilUjiPages from "./pages/HasilUji/HasilUjiPages";
 import TestimoniPages from "./pages/Testimoni/TestimoniPages";
 import ListMemberPages from "./pages/ListMember/ListMemberPages";
-import HasilUji from "./components/landing/TestResult/HasilUji";
 import LandingLayout from "./layout/LandingLayout";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import HasilUji from "./landing/TestResult/HasilUji";
 
 export default function App() {
    useEffect(() => {

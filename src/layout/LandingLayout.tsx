@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/landing/Navbar/Navbar";
-import Footer from "../components/landing/Footer/Footer";
 import { Outlet } from "react-router-dom";
+import Navbar from "../landing/Navbar/Navbar";
+import Footer from "../landing/Footer/Footer";
 
 const LandingLayout: React.FC = () => {
   return (
