@@ -15,7 +15,7 @@ const AuthenticationController = {
 
         try {
             // Use the connection pool to acquire a client
-            const client = await dbPool.connect();
+            const client = await dbPool.getConnection();
 
             // Example query (replace with your actual query)
             const result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
