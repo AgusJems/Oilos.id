@@ -1,39 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from "react-slick";
-
-interface NewsItem {
-  id: number;
-  img: string;
-  name: string;
-  text: string;
-}
-
-const NewsData: NewsItem[] = [
-  {
-    id: 1,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 1",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-  {
-    id: 2,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 2",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-  {
-    id: 3,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 3",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-  {
-    id: 4,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 4",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-];
+import { NewsData } from '../components/data';
 
 const News: React.FC = () => {
   const settings = {
@@ -101,7 +69,13 @@ const News: React.FC = () => {
             ))}
           </Slider>
         </div>
-
+        <div className="flex justify-center">
+            <Link className='text-center' to={`/beritaland`}>
+              <button className="bg-gradient-to-r from-yellow-500 to-yellow-300 text-white px-6 py-3 rounded-full hover:scale-105 duration-200 mt-10">
+                View All News
+              </button>
+            </Link>
+          </div>
       </div>
     </div>
   );

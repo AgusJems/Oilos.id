@@ -29,7 +29,9 @@ import LandingLayout from "./layout/LandingLayout";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import HasilUji from "./landing/TestResult/HasilUji";
+import HasilUji from "./landing/components/TestResult/HasilUji";
+import Berita from "./landing/components/Berita/Berita";
+import BeritaDetail from "./landing/components/Berita/BeritaDetail";
 
 export default function App() {
    useEffect(() => {
@@ -88,6 +90,8 @@ export default function App() {
           <Route element={<LandingLayout />}>
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/hasilujiland" element={<HasilUji />} />
+            <Route path="/beritaland" element={<Berita />} />
+            <Route path="/beritaland/:id" element={<BeritaDetail />} />
           </Route>
 
           {/* Fallback Route */}

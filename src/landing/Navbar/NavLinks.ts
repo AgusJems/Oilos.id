@@ -28,12 +28,12 @@ export const NavLinks: NavLinkItem[] = [
   },
   {
     id: 4,
-    name: "Testimoni",
-    link: "/testimoniland",
+    name: "Pemesanan",
+    link: "/pemesananland",
   },
   {
     id: 5,
-    name: "Daftar Member",
-    link: "/memberland",
+    name: "Kemitraan",
+    link: "/kemitraanland",
   },
 ];
