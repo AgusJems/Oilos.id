@@ -29,11 +29,11 @@ export const NavLinks: NavLinkItem[] = [
   {
     id: 4,
     name: "Pemesanan",
-    link: "/pemesananland",
+    link: "/orderland",
   },
-  {
-    id: 5,
-    name: "Kemitraan",
-    link: "/kemitraanland",
-  },
+  // {
+  //   id: 5,
+  //   name: "Kemitraan",
+  //   link: "/kemitraanland",
+  // },
 ];
