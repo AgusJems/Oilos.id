@@ -4,8 +4,8 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import messageController from './src/controllers/messageController.js';
-import AuthenticationController from './src/controllers/AuthenticationController.js';
 import mysql from 'mysql2/promise';
+import AuthenticationController from './src/controllers/AuthenticationController.js';
 
 // Create the database connection pool
 const pool = mysql.createPool({

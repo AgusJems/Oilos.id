@@ -45,3 +45,5 @@ const AuthenticationController = {
     },
 
 }
+
+export default AuthenticationController;
