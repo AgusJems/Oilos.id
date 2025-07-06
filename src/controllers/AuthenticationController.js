@@ -33,7 +33,7 @@ const AuthenticationController = {
             if (password === user.password) {
                 // Successful login
                 // You might generate a token here and send it back
-                res.status(200).json({ message: 'Login successful', user: { id: user.id, username: user.username } });
+                res.status(200).json({ message: 'Login successful', data: user });
             } else {
                 res.status(401).json({ message: 'Invalid username or password' });
             }

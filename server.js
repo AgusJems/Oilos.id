@@ -4,6 +4,7 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import messageController from './src/controllers/messageController.js';
+import AuthenticationController from './src/controllers/AuthenticationController.js';
 import mysql from 'mysql2/promise';
 
 // Create the database connection pool
@@ -45,6 +46,9 @@ app.use(express.json());
 // Use the controller's methods directly in the routes
 app.get('/api/message', messageController.getMessage);
 app.get('/api/users/:userId/message', messageController.getUserMessage);
+
+// Add new route for login
+app.post('/api/login', AuthenticationController.login);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
