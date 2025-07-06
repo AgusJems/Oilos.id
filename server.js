@@ -1,8 +1,10 @@
 // server.js
 import express from 'express';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 import messageController from './src/controllers/messageController.js';
-import mysql from 'mysql2/promise'; // Use promise wrapper for pool
+import mysql from 'mysql2/promise';
 
 // Create the database connection pool
 const pool = mysql.createPool({
@@ -14,6 +16,22 @@ const pool = mysql.createPool({
   connectionLimit: 10, // Adjust the limit as needed
   queueLimit: 0
 });
+
+// Swagger definition
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Express API with Swagger',
+      version: '1.0.0',
+      description: 'API documentation for your Express application',
+    },
+  },
+  apis: ['./server.js'], // Path to the API routes file(s)
+};
+
+// Generate Swagger specification
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Initialize the messageController with the database pool
 messageController.init(pool);
@@ -27,6 +45,8 @@ app.use(express.json());
 // Use the controller's methods directly in the routes
 app.get('/api/message', messageController.getMessage);
 app.get('/api/users/:userId/message', messageController.getUserMessage);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Start the server
 app.listen(port, () => {
