@@ -21,15 +21,22 @@ const Navbar: React.FC = () => {
         <div className="max-w-screen-xl mx-auto px-4 py-2 md:py-0">
             <div className="flex items-center justify-between">
                 {/* Logo */}
-                <a href="/">
+                <Link to="/landing">
                     <img
                     src="/images/logo/logo.png"
                     alt="Logo"
                     width={100}
                     height={70}
-                    className="object-contain"
+                    className="dark:hidden"
                     />
-                </a>
+                    <img
+                    className="hidden dark:block"
+                    src="./images/logo/logo-white.png"
+                    alt="Logo"
+                    width={100}
+                    height={70}
+                    />
+                </Link>
 
                 {/* Menu Desktop */}
                 <div className="hidden md:block">
