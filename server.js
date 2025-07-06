@@ -35,6 +35,7 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Initialize the messageController with the database pool
+AuthenticationController.init(pool);
 messageController.init(pool);
 
 const app = express();
@@ -47,7 +48,6 @@ app.use(express.json());
 app.get('/api/message', messageController.getMessage);
 app.get('/api/users/:userId/message', messageController.getUserMessage);
 
-// Add new route for login
 app.post('/api/login', AuthenticationController.login);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
