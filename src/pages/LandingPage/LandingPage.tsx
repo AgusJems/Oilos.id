@@ -9,7 +9,6 @@ import Safety from "../../components/landing/Safety/Safety";
 import Patner from "../../components/landing/Patner/Patner";
 import News from "../../components/landing/OurNews/Berita";
 import Testimonial from "../../components/landing/Testimoni/Testimoni";
-import Footer from "../../components/landing/Footer/Footer";
 
 const LandingPage: React.FC = () => {
   return (
@@ -21,7 +20,6 @@ const LandingPage: React.FC = () => {
       <Patner/>
       <News/>
       <Testimonial/>
-      <Footer/>
     </div>
   );
 };

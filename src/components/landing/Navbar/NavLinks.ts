@@ -18,8 +18,8 @@ export const NavLinks: NavLinkItem[] = [
   },
   {
     id: 2,
-    name: "Tentang",
-    link: "/tentangland",
+    name: "Berita",
+    link: "/beritaland",
   },
   {
     id: 3,
