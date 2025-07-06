@@ -13,10 +13,11 @@ const messageController = {
     // Now you can use dbPool to interact with the database
     try {
       // Example: Fetch user details from the database using the userId
-      const [rows, fields] = await dbPool.query('SELECT * FROM test', [userId]);
+      // const [rows, fields] = await dbPool.query('SELECT * FROM test', [userId]);
+      const rows = [{username: 'test', password:'test'}]
 
       if (rows.length > 0) {
-        const user = rows[0];
+        const user = rows;
         res.json({ message: 'This is a user message', user: user });
       } else {
         res.status(404).json({ message: 'User not found' });
