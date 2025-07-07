@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import mysql from 'mysql2/promise';
 import AuthenticationController from './src/controllers/AuthenticationController.js';
+import MemberController from './src/controllers/MemberController.js';
 
 // Create the database connection pool
 const pool = mysql.createPool({
@@ -50,6 +51,7 @@ app.use(express.json());
 //Routes
 app.post('/api/login', AuthenticationController.login);
 app.post('/api/register', AuthenticationController.register);
+app.get('/api/listMember', MemberController.register);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
