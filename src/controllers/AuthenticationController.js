@@ -28,7 +28,7 @@ const AuthenticationController = {
       if (password === user.Password) {
         return res.status(200).json({ message: 'Login successful', data: user });
       } else {
-        return res.status(401).json({ message: 'Invalid username or password' });
+        return res.status(401).json({ message: 'Invalid password' });
       }
 
     } catch (error) {
