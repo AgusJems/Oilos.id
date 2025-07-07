@@ -24,6 +24,12 @@ const pool = mysql.createPool({
 
 const secretKey = process.env.SECRET_KEY;
 
+const reqEmail = {
+  host: process.env.API_URL,
+  user: process.env.EMAIL_USER,
+  password: process.env.EMAIL_PASS,
+}
+
 // Swagger definition
 const swaggerOptions = {
   definition: {
@@ -41,7 +47,7 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Initialize the messageController with the database pool
-AuthenticationController.init(pool, secretKey);
+AuthenticationController.init(pool, secretKey, reqEmail);
 MemberController.init(pool, secretKey);
 
 const app = express();
