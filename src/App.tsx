@@ -32,7 +32,9 @@ import "aos/dist/aos.css";
 import HasilUji from "./landing/components/TestResult/HasilUji";
 import Berita from "./landing/components/Berita/Berita";
 import BeritaDetail from "./landing/components/Berita/BeritaDetail";
-import Order from "./landing/components/Order/Order";
+import Order from "./landing/components/Pemesanan/Order/page";
+import OrderDetail from "./landing/components/Pemesanan/OrderDetail/page";
+import CartPage from "./landing/components/Pemesanan/Cart/page";
 
 export default function App() {
    useEffect(() => {
@@ -94,6 +96,8 @@ export default function App() {
             <Route path="/beritaland/:id" element={<BeritaDetail />} />
             <Route path="/hasilujiland" element={<HasilUji />} />
             <Route path="/orderland" element={<Order />} />
+            <Route path="/orderland/:id" element={<OrderDetail />} />
+            <Route path="/cart/:id" element={<CartPage />} />
           </Route>
 
           {/* Fallback Route */}
