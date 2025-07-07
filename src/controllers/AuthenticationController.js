@@ -25,7 +25,7 @@ const AuthenticationController = {
                 `SELECT u.Id, u.Username, u.Password, u.RoleId, u.Name, u.Identity, u.Phone, u.Email, u.Area, u.CodeRefferal, r.Code AS RoleCode, r.Name AS RoleName
                 FROM users u
                 INNER JOIN roles r ON r.Id = u.RoleId
-                WHERE Username = ? AND Status = 1`,
+                WHERE u.Username = ? AND u.Status = 1`,
                 [username]
             );
 
