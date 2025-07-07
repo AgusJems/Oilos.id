@@ -53,6 +53,7 @@ app.get('/api/message', messageController.getMessage);
 app.get('/api/users/:userId/message', messageController.getUserMessage);
 
 app.post('/api/login', AuthenticationController.login);
+app.post('/api/register', AuthenticationController.register);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

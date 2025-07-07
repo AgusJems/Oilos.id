@@ -15,7 +15,7 @@ const AuthenticationController = {
     try {
       // Gunakan pool langsung (tanpa getConnection)
       const [rows] = await dbPool.query(
-        'SELECT * FROM users WHERE username = ?',
+        'SELECT * FROM users WHERE Username = ? AND Status = 1',
         [username]
       );
 
@@ -33,6 +33,34 @@ const AuthenticationController = {
 
     } catch (error) {
       console.error('Error during login:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+  register: async (req, res) => {
+    try {
+      const { username, password, name, identity, phone, email, area  } = req.body;
+
+      if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required' });
+      }
+
+      const [existingUsers] = await dbPool.query(
+        'SELECT * FROM users WHERE Username = ? OR Identity = ?',
+        [username, identity]
+      );
+
+      if (existingUsers.length > 0) {
+        return res.status(400).json({ message: 'Username OR Identity already exists' });
+      }
+
+      await dbPool.query(
+        'INSERT INTO users (Username, Password, RoleId, Name, Identity, Phone, Email, Area, Status, CreatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [username, password, 2, name, identity, phone, email, area, 1, username ]
+      );
+      return res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+      console.error(error);
       return res.status(500).json({ message: 'Internal server error' });
     }
   },
