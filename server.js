@@ -22,6 +22,8 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
+const secretKey = process.env.SECRET_KEY;
+
 // Swagger definition
 const swaggerOptions = {
   definition: {
@@ -39,7 +41,8 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Initialize the messageController with the database pool
-AuthenticationController.init(pool);
+AuthenticationController.init(pool, secretKey);
+MemberController.init(pool, secretKey);
 
 const app = express();
 const port = 3001;
@@ -47,11 +50,10 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-
 //Routes
 app.post('/api/login', AuthenticationController.login);
 app.post('/api/register', AuthenticationController.register);
-app.get('/api/listMember', MemberController.register);
+app.get('/api/getUsers', MemberController.getUsers);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
