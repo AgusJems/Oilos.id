@@ -39,7 +39,6 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Initialize the messageController with the database pool
 AuthenticationController.init(pool);
-messageController.init(pool);
 
 const app = express();
 const port = 3001;
