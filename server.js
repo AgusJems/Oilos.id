@@ -6,7 +6,6 @@ import express from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import messageController from './src/controllers/messageController.js';
 import mysql from 'mysql2/promise';
 import AuthenticationController from './src/controllers/AuthenticationController.js';
 
@@ -48,10 +47,8 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-// Use the controller's methods directly in the routes
-app.get('/api/message', messageController.getMessage);
-app.get('/api/users/:userId/message', messageController.getUserMessage);
 
+//Routes
 app.post('/api/login', AuthenticationController.login);
 app.post('/api/register', AuthenticationController.register);
 

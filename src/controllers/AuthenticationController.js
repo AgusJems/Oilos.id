@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 let dbPool;
 
 const AuthenticationController = {
@@ -26,7 +27,20 @@ const AuthenticationController = {
       const user = rows[0];
 
       if (password === user.Password) {
-        return res.status(200).json({ message: 'Login successful', data: user });
+        const token = jwt.sign(
+            {
+                Username: user.Username,
+                RoleId: user.RoleId,
+                Name: user.Name,
+                Identity: user.Identity,
+                Phone: user.Phone,
+                Email: user.Email,
+                Area: user.Area,
+                CodeRefferal: user.CodeRefferal
+            },
+            'your_secret_key' // Replace with a strong, secret key
+        );
+        return res.status(200).json({ message: 'Login successful', token: token });
       } else {
         return res.status(401).json({ message: 'Invalid password' });
       }
@@ -39,7 +53,7 @@ const AuthenticationController = {
 
   register: async (req, res) => {
     try {
-      const { username, password, name, identity, phone, email, area  } = req.body;
+      const { username, password, name, identity, phone, email, area, codeRefferal  } = req.body;
 
       if (!username || !password) {
         return res.status(400).json({ message: 'Username and password are required' });
@@ -55,8 +69,8 @@ const AuthenticationController = {
       }
 
       await dbPool.query(
-        'INSERT INTO users (Username, Password, RoleId, Name, Identity, Phone, Email, Area, Status, CreatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [username, password, 2, name, identity, phone, email, area, 1, username ]
+        'INSERT INTO users (Username, Password, RoleId, Name, Identity, Phone, Email, Area, CodeRefferal, Status, CreatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [username, password, 2, name, identity, phone, email, area, codeRefferal, 1, username ]
       );
       return res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
