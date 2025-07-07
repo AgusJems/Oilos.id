@@ -1,14 +1,18 @@
 // server.js
 import dotenv from 'dotenv';
-dotenv.config();
-
 import express from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
 import mysql from 'mysql2/promise';
+import swaggerSpec from './swagger.js';
+
 import AuthenticationController from './src/controllers/AuthenticationController.js';
 import MemberController from './src/controllers/MemberController.js';
+
+import memberRoutes from './routes/api/memberRoutes.js';
+import authenticationRoutes from './routes/api/authenticationRoutes.js';
+
+dotenv.config();
 
 // Create the database connection pool
 const pool = mysql.createPool({
@@ -22,7 +26,9 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-const secretKey = process.env.SECRET_KEY;
+const envSetting = {
+  secretKey: process.env.SECRET_KEY
+}
 
 const reqEmail = {
   host: process.env.API_URL,
@@ -30,25 +36,9 @@ const reqEmail = {
   password: process.env.EMAIL_PASS,
 }
 
-// Swagger definition
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Express API with Swagger',
-      version: '1.0.0',
-      description: 'API documentation for your Express application',
-    },
-  },
-  apis: ['./server.js'], // Path to the API routes file(s)
-};
-
-// Generate Swagger specification
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
-
 // Initialize the messageController with the database pool
-AuthenticationController.init(pool, secretKey, reqEmail);
-MemberController.init(pool, secretKey);
+AuthenticationController.init(pool, envSetting, reqEmail);
+MemberController.init(pool, envSetting);
 
 const app = express();
 const port = 3001;
@@ -56,12 +46,8 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-//Routes
-app.post('/api/login', AuthenticationController.login);
-app.post('/api/register', AuthenticationController.register);
-app.post('/verify-email', AuthenticationController.verifyEmail);
-
-app.get('/api/getUsers', MemberController.getUsers);
+app.use('/api', authenticationRoutes);
+app.use('/api', memberRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

@@ -1,36 +1,17 @@
 import jwt from 'jsonwebtoken';
-let dbPool;
 let SecretKey;
+import MemberService from '/home/user/Oilos.id/src/services/MemberService.js';
 
-const MemberController = {
+const MemberController = { 
     init: (pool, secretKey) => {
-        dbPool = pool;
         SecretKey = secretKey;
+        MemberService.init(pool);
     },
 
-    getUsers: async (req, res) => {
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-
-        if (token == null) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
+    getAllUsers: async (req, res) => {
         try {
-            jwt.verify(token, SecretKey, async (err, user) => {
-                if (err) {
-                    return res.status(403).json({ message: 'Forbidden' });
-                }
-
-                // Token is valid, proceed with fetching users
-                const [rows] = await dbPool.query(`
-            SELECT U.Id, U.Username, U.Name, U.Identity, U.Phone, U.Email, U.Area, U.CodeRefferal, R.Name AS RoleName
-            FROM users U
-            INNER JOIN roles R ON R.Id = U.RoleId
-
-        `);
-                res.status(200).json({ data: rows });
-            });
+            const rows = await MemberService.getAllUsers();
+            res.status(200).json({ data: rows });
         } catch (error) {
             console.error('Error fetching users:', error);
             res.status(500).json({ message: 'Internal server error' });

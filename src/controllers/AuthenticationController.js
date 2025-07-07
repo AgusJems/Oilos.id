@@ -3,12 +3,12 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
 let dbPool;
-let SecretKey;
+let EnvSetting;
 let ReqEmail;
 const AuthenticationController = {
-    init: (pool, secretKey, reqEmail) => {
+    init: (pool, envSetting, reqEmail) => {
         dbPool = pool;
-        SecretKey = secretKey;
+        EnvSetting = envSetting;
         ReqEmail = reqEmail;
     },
 
@@ -22,7 +22,10 @@ const AuthenticationController = {
         try {
             // Gunakan pool langsung (tanpa getConnection)
             const [rows] = await dbPool.query(
-                'SELECT * FROM users WHERE Username = ? AND Status = 1',
+                `SELECT u.Id, u.Username, u.Password, u.RoleId, u.Name, u.Identity, u.Phone, u.Email, u.Area, u.CodeRefferal, r.Code AS RoleCode, r.Name AS RoleName
+                FROM users u
+                INNER JOIN roles r ON r.Id = u.RoleId
+                WHERE Username = ? AND Status = 1`,
                 [username]
             );
 
@@ -37,6 +40,8 @@ const AuthenticationController = {
                     {
                         Username: user.Username,
                         RoleId: user.RoleId,
+                        RoleCode: user.RoleCode,
+                        RoleName: user.RoleName,
                         Name: user.Name,
                         Identity: user.Identity,
                         Phone: user.Phone,
@@ -44,7 +49,7 @@ const AuthenticationController = {
                         Area: user.Area,
                         CodeRefferal: user.CodeRefferal
                     },
-                    SecretKey // Replace with a strong, secret key
+                    EnvSetting.secretKey // Replace with a strong, secret key
                 );
                 return res.status(200).json({ message: 'Login successful', token: token });
             } else {
