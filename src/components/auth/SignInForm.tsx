@@ -5,36 +5,31 @@ import Label from "../form/Label";
 import Input from "../form/input/InputField";
 // import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
+import { appSetting } from "../../../appSetting";
+import { useNavigate } from "react-router-dom";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   // const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("http://localhost:3001/api/login", {
+      const res = await fetch(`${appSetting.apiUrl}/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: email, // karena backend pakai 'username'
-          password: password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email, password }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        alert("Login berhasil!");
-        console.log(data);
-
+        localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.data));
-        window.location.href = "/";
+        navigate("/dashboard"); // ✅ arahkan ke halaman dashboard
       } else {
         alert(data.message || "Login gagal");
       }
