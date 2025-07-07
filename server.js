@@ -59,6 +59,8 @@ app.use(express.json());
 //Routes
 app.post('/api/login', AuthenticationController.login);
 app.post('/api/register', AuthenticationController.register);
+app.post('/verify-email', AuthenticationController.verifyEmail);
+
 app.get('/api/getUsers', MemberController.getUsers);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
