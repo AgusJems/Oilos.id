@@ -31,7 +31,7 @@ const OrderDetail = () => {
 
         <button
           onClick={handleAddToCart}
-          className="mt-6 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full"
+          className="mt-6 cursor-pointer bg-gradient-to-r from-green-700 to-green-400 text-white px-6 py-2 rounded-full"
         >
           Add to Cart
         </button>
