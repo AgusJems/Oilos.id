@@ -89,7 +89,7 @@ const CartPage = () => {
           <span>Rp {totalPrice.toLocaleString("id-ID")}</span>
         </div>
 
-        <button className="mt-6 w-full bg-black text-white py-3 rounded-lg font-medium">
+        <button className="mt-6 w-full cursor-pointer bg-gradient-to-r from-green-700 to-green-400 text-white py-3 rounded-full font-medium">
           Check out
         </button>
       </div>

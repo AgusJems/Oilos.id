@@ -17,7 +17,7 @@ const OrderCard = ({ item }: Props) => {
       <p className="text-green-600 font-semibold mb-2">Rp. {item.price}</p>
       <p className="text-sm text-gray-500 mb-4 line-clamp-2">{item.description}</p>
       <Link to={`/orderland/${item.id}`} className="block">
-        <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-full">
+        <button className="w-full cursor-pointer bg-gradient-to-r from-green-700 to-green-400 text-white py-2 rounded-full">
           Purchase
         </button>
       </Link>
