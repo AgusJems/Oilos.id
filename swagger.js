@@ -26,6 +26,24 @@ const swaggerOptions = {
           },
           required: ['id', 'username', 'name', 'identity', 'phone', 'email', 'area', 'status', 'createdAt', 'updatedAt'],
         },
+        UserUpdateInput: {
+          type: 'object',
+          properties: {
+            username: {
+              type: 'string',
+            },
+            password: {
+              type: 'string',
+            },
+            name: { type: 'string' },
+            identity: { type: 'string' },
+            phone: { type: 'string' },
+            email: { type: 'string' },
+            area: { type: 'string' },
+            codeRefferal: { type: 'string' },
+          },
+        },
+
       },
     },
   },
