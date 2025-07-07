@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /getUsers:
+ * /api/getUsers:
  *   get:
  *     summary: Get all users
  *     description: Retrieve a list of all registered users. This endpoint requires authentication.

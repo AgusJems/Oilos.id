@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /login:
+ * /api/login:
  *   post:
  *     summary: Authenticate user and get a JWT token
  *     description: Authenticates a user with username and password and returns a JSON Web Token (JWT) upon successful login.
@@ -75,7 +75,7 @@ router.post('/login', AuthenticationController.login);
 
 /**
  * @swagger
- * /register:
+ * /api/register:
  *   post:
  *     summary: Register a new user
  *     description: Registers a new user with the provided information.
