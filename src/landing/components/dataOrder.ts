@@ -1,4 +1,4 @@
-interface OrderItem {
+export interface OrderItem {
   id: number;
   img: string;
   name: string;
