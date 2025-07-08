@@ -3,47 +3,72 @@ import { Link } from "react-router";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
-// import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
+import { appSetting } from "../../../appSetting";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
+interface DecodedUser {
+  Username: string;
+  RoleCode: string;
+  RoleName: string;
+  Name: string;
+  Identity: string;
+  Email?: string | null;
+  Phone?: string | null;
+  Area?: string | null;
+  CodeRefferal?: string;
+  iat?: number;
+}
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
-  // const [isChecked, setIsChecked] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3001/api/login", {
+      const res = await fetch(`${appSetting.apiUrl}/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: email, // karena backend pakai 'username'
-          password: password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
 
-      if (res.ok) {
-        alert("Login berhasil!");
-        console.log(data);
-
-        localStorage.setItem("user", JSON.stringify(data.data));
-        window.location.href = "/";
-      } else {
+      if (!res.ok) {
         alert(data.message || "Login gagal");
+        return;
       }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.data));
+
+      const decoded: DecodedUser = jwtDecode(data.token);
+      console.log("JWT Decoded:", decoded);
+
+      switch (decoded.RoleCode) {
+        case "A-0":
+          navigate("/dashboard");
+          break;
+        case "M-1":
+        case "M-2":
+        case "M-3":
+          navigate("/landing");
+          break;
+        default:
+          alert("Role tidak dikenali. Hubungi admin.");
+          break;
+      }
+
     } catch (err) {
       console.error("Login error:", err);
       alert("Terjadi kesalahan server.");
     }
   };
-
 
   return (
     <div className="flex flex-col flex-1">
@@ -62,12 +87,12 @@ export default function SignInForm() {
               <div className="space-y-6">
                 <div>
                   <Label>
-                    Email <span className="text-error-500">*</span>{" "}
+                    Username <span className="text-error-500">*</span>{" "}
                   </Label>
                   <Input 
-                    placeholder="info@gmail.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} 
+                    placeholder="Enter your username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)} 
                   />
                 </div>
                 <div>
@@ -93,20 +118,6 @@ export default function SignInForm() {
                     </span>
                   </div>
                 </div>
-                {/* <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Checkbox checked={isChecked} onChange={setIsChecked} />
-                    <span className="block font-normal text-gray-700 text-theme-sm dark:text-gray-400">
-                      Keep me logged in
-                    </span>
-                  </div>
-                  <Link
-                    to="/reset-password"
-                    className="text-sm text-green-500 hover:text-green-600 dark:text-green-400"
-                  >
-                    Forgot password?
-                  </Link>
-                </div> */}
                 <div>
                   <Button className="w-full bg-green-500 shadow-theme-xs hover:bg-green-600" size="sm">
                     Sign in
