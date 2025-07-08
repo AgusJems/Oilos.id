@@ -43,6 +43,14 @@ const swaggerOptions = {
             codeRefferal: { type: 'string' },
           },
         },
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+            description: 'Enter JWT Bearer token **_only_**',
+          },
+        },
 
       },
     },

@@ -1,14 +1,20 @@
-import jwt from 'jsonwebtoken';
-let SecretKey;
+import JwtService from '/home/user/Oilos.id/src/services/JwtService.js';
 import MemberService from '/home/user/Oilos.id/src/services/MemberService.js';
 
 const MemberController = { 
-    init: (pool, secretKey) => {
-        SecretKey = secretKey;
+    init: (pool) => {
         MemberService.init(pool);
     },
 
     getAllUsers: async (req, res) => {
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            const token = authHeader.split(' ')[1];
+            const userData = JwtService.getDataFromToken(token);
+            if (!userData || userData.rolecode !== 1) {
+                return res.status(403).json({ message: 'Forbidden: Admins only' });
+            }
+        }
         try {
             const rows = await MemberService.getAllUsers();
             res.status(200).json({ data: rows });

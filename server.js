@@ -38,7 +38,7 @@ const reqEmail = {
 
 // Initialize the messageController with the database pool
 AuthenticationController.init(pool, envSetting, reqEmail);
-MemberController.init(pool, envSetting);
+MemberController.init(pool);
 
 const app = express();
 const port = 3001;

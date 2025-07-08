@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
+import { format } from 'date-fns';
 
 let dbPool;
 let EnvSetting;
@@ -64,7 +65,7 @@ const AuthenticationController = {
 
     register: async (req, res) => {
         try {
-            const { username, password, name, identity, phone, email, area, codeRefferal } = req.body;
+            const { username, password, name, identity, phone, email, provinceCode, cityCode, codeRefferal } = req.body;
             const verificationToken = crypto.randomBytes(20).toString('hex');
 
             if (!username || !password) {
@@ -80,10 +81,21 @@ const AuthenticationController = {
                 return res.status(400).json({ message: 'Username OR Identity already exists' });
             }
 
+            const words = username.split(' ');
+            let initial = '';
+            for (const word of words) {
+                if (word.length > 0) {
+                    initial += word[0].toUpperCase();
+                }
+            }
+
+            const registrationDateTime = format(new Date(), 'ddMMyyyyHm');
+            let generateCode = `${initial}-${provinceCode}${cityCode}${registrationDateTime}`;
+        
             // Insert user with status 0 (unverified) and verification token
             await dbPool.query(
-                'INSERT INTO users (Username, Password, RoleId, Name, Identity, Phone, Email, Area, CodeRefferal, verificationToken, Status, CreatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [username, password, 2, name, identity, phone, email, area, codeRefferal, verificationToken, 0, username]
+                'INSERT INTO users (Username, Password, RoleId, Name, Identity, Phone, Email, ProvinceCode, CityCode, CodeRefferal, verificationToken, Status, CreatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [username, password, 2, name, identity, phone, email, provinceCode, cityCode, generateCode, verificationToken, 0, username]
             );
 
             // Send verification email

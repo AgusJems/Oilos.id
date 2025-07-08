@@ -1,5 +1,6 @@
 import express from 'express';
 import MemberController from '../../src/controllers/MemberController.js';
+import AuthGuardService from '../../src/services/AuthGuardService.js';
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get('/getAllUsers', MemberController.getAllUsers);
+router.get('/getAllUsers', AuthGuardService.AuthGuardAdmin, MemberController.getAllUsers);
 
 /**
  * @swagger

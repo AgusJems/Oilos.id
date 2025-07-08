@@ -92,7 +92,8 @@ router.post('/login', AuthenticationController.login);
  *               - identity
  *               - phone
  *               - email
- *               - area
+ *               - provinceCode
+ *               - cityCode
  *             properties:
  *               username:
  *                 type: string
@@ -114,7 +115,10 @@ router.post('/login', AuthenticationController.login);
  *                 type: string
  *                 format: email
  *                 description: The user's email address.
- *               area:
+ *               provinceCode:
+ *                 type: string
+ *                 description: The user's geographical area.
+ *               cityCode:
  *                 type: string
  *                 description: The user's geographical area.
  *               codeRefferal:
