@@ -8,9 +8,11 @@ import swaggerSpec from './swagger.js';
 
 import AuthenticationController from './src/controllers/AuthenticationController.js';
 import MemberController from './src/controllers/MemberController.js';
+import ProvinceController from './src/controllers/ProvinceController.js';
 
-import memberRoutes from './routes/api/memberRoutes.js';
 import authenticationRoutes from './routes/api/authenticationRoutes.js';
+import memberRoutes from './routes/api/memberRoutes.js';
+import provinceRoutes from './routes/api/provinceRoutes.js';
 
 dotenv.config();
 
@@ -39,6 +41,7 @@ const reqEmail = {
 // Initialize the messageController with the database pool
 AuthenticationController.init(pool, envSetting, reqEmail);
 MemberController.init(pool);
+ProvinceController.init(pool);
 
 const app = express();
 const port = 3001;
@@ -48,6 +51,7 @@ app.use(express.json());
 
 app.use('/api', authenticationRoutes);
 app.use('/api', memberRoutes);
+app.use('/api', provinceRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

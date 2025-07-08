@@ -51,17 +51,62 @@ const swaggerOptions = {
             description: 'Enter JWT Bearer token **_only_**',
           },
         },
-
       },
+
     },
+    paths: {
+      '/api/getAllUsers': {
+        get: {
+          summary: 'Get all users',
+          description: 'Retrieve a list of all registered users. This endpoint requires authentication.',
+          responses: {
+            200: {
+              description: 'A list of users.',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/User', // Reference to a User schema definition
+                    },
+                  },
+                },
+              }
+            },
+            401: {
+              description: 'Unauthorized - No token provided or token is invalid'
+            },
+            403: {
+              description: 'Forbidden - User does not have sufficient permissions'
+            },
+            500: {
+              description: 'Internal server error'
+            }
+          }
+        }
+      },
+      '/api/getAllProvinces': {
+        get: {
+          summary: 'Get all provinces',
+          description: 'Retrieve a list of all provinces.',
+          parameters: [],
+          responses: {
+            200: {
+              description: 'A list of provinces',
+              content: { 'application/json': {} },
+            },
+          },
+        },
+      },
+    }
   },
   apis: [
     '/home/user/Oilos.id/server.js',
     '/home/user/Oilos.id/routes/api/memberRoutes.js',
     '/home/user/Oilos.id/routes/api/authenticationRoutes.js',
+    '/home/user/Oilos.id/routes/api/provinceRoutes.js'
   ], // Path to the API routes file(s)
 };
-
 // Generate Swagger specification
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
