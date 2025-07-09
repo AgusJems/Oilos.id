@@ -9,7 +9,7 @@ const ProvinceService = {
         try {
             const query = 'SELECT * FROM provinces';
             const result = await pool.query(query);
-            return result[0];
+            return result;
         } catch (error) {
             console.error('Error fetching provinces:', error);
             throw error; // Re-throw the error for the controller to handle
