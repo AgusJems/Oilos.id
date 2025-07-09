@@ -2,9 +2,6 @@ import { data } from 'react-router';
 import ProvinceService from './../services/ProvinceService.js';
 
 const ProvinceController = { 
-    init: (pool) => {
-        ProvinceService.init(pool);
-    },
 
     getAllProvinces: async (req, res) => {
         try {

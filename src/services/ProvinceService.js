@@ -1,18 +1,14 @@
-let dbPool;
+import pool from '../../config/db.js';
 
 const ProvinceService = {
-    init: (pool) => {
-        dbPool = pool;
-    },
-
     getAllProvinces: async () => {
-        if (!dbPool) {
+        if (!pool) {
             throw new Error("Database pool not initialized in ProvinceService.");
         }
 
         try {
             const query = 'SELECT * FROM provinces';
-            const result = await dbPool.query(query);
+            const result = await pool.query(query);
             return result[0];
         } catch (error) {
             console.error('Error fetching provinces:', error);

@@ -2,9 +2,6 @@ import JwtService from './../services/JwtService.js';
 import MemberService from './../services/MemberService.js';
 
 const MemberController = { 
-    init: (pool) => {
-        MemberService.init(pool);
-    },
 
     getAllUsers: async (req, res) => {
         const authHeader = req.headers.authorization;

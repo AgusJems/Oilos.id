@@ -2,13 +2,12 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { format } from 'date-fns';
+import pool from '../../config/db.js';
 
-let dbPool;
 let EnvSetting;
 let ReqEmail;
 const AuthenticationController = {
-    init: (pool, envSetting, reqEmail) => {
-        dbPool = pool;
+    init: (envSetting, reqEmail) => {
         EnvSetting = envSetting;
         ReqEmail = reqEmail;
     },
@@ -22,7 +21,7 @@ const AuthenticationController = {
 
         try {
             // Gunakan pool langsung (tanpa getConnection)
-            const [rows] = await dbPool.query(
+            const [rows] = await pool.query(
                 `SELECT u.Id, u.Username, u.Password, u.RoleId, u.Name, u.Identity, u.Phone, u.Email, u.Area, u.CodeRefferal, r.Code AS RoleCode, r.Name AS RoleName
                 FROM users u
                 INNER JOIN roles r ON r.Id = u.RoleId
@@ -72,7 +71,7 @@ const AuthenticationController = {
                 return res.status(400).json({ message: 'Username and password are required' });
             }
 
-            const [existingUsers] = await dbPool.query(
+            const [existingUsers] = await pool.query(
                 'SELECT * FROM users WHERE Username = ? OR Identity = ?',
                 [username, identity]
             );
@@ -93,7 +92,7 @@ const AuthenticationController = {
             let generateCode = `${initial}-${provinceCode}${cityCode}${registrationDateTime}`;
         
             // Insert user with status 0 (unverified) and verification token
-            await dbPool.query(
+            await pool.query(
                 'INSERT INTO users (Username, Password, RoleId, Name, Identity, Phone, Email, ProvinceCode, CityCode, CodeRefferal, verificationToken, Status, CreatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [username, password, 2, name, identity, phone, email, provinceCode, cityCode, generateCode, verificationToken, 0, username]
             );
@@ -131,9 +130,9 @@ const AuthenticationController = {
 
     verifyEmail: async (req, res) => {
         const { token } = req.query;
-        const [rows] = await dbPool.query('SELECT * FROM users WHERE verificationToken = ?', [token]);
+        const [rows] = await pool.query('SELECT * FROM users WHERE verificationToken = ?', [token]);
         if (rows.length === 0) return res.status(400).json({ message: 'Invalid verification token' });
-        await dbPool.query('UPDATE users SET Status = 1, verificationToken = NULL WHERE verificationToken = ?', [token]);
+        await pool.query('UPDATE users SET Status = 1, verificationToken = NULL WHERE verificationToken = ?', [token]);
         return res.status(200).json({ message: 'Email verified successfully' });
     }
 };

@@ -1,13 +1,9 @@
-let dbPool;
+import pool from '../../config/db.js';
 
 const MemberService = {
-    init: (pool) => {
-        dbPool = pool;
-    },
-
     getAllUsers: async () => {
         try {
-            const [rows] = await dbPool.query(`
+            const [rows] = await pool.query(`
                 SELECT U.Id, U.Username, U.Name, U.Identity, U.Phone, U.Email, U.Area, U.CodeRefferal, R.Code AS RoleCode
                 FROM users U
                 INNER JOIN roles R ON R.Id = U.RoleId
@@ -21,7 +17,7 @@ const MemberService = {
 
     getUserById: async (userId) => {
         try {
-            const [rows] = await dbPool.query('SELECT * FROM users WHERE Id = ?', [userId]);
+            const [rows] = await pool.query('SELECT * FROM users WHERE Id = ?', [userId]);
             return rows[0]; // Assuming user ID is unique, return the first row
         } catch (error) {
             console.error(`Error fetching user with ID ${userId}:`, error);
@@ -38,7 +34,7 @@ const MemberService = {
             const values = Object.values(updateData);
             values.push(userId); // Add userId to the end of values for the WHERE clause
 
-            await dbPool.query(`UPDATE users SET ${setClauses} WHERE Id = ?`, values);
+            await pool.query(`UPDATE users SET ${setClauses} WHERE Id = ?`, values);
             return true; // Indicate success
         } catch (error) {
             console.error(`Error updating user with ID ${userId}:`, error);
