@@ -10,9 +10,9 @@ import AuthenticationController from './src/controllers/AuthenticationController
 import MemberController from './src/controllers/MemberController.js';
 import ProvinceController from './src/controllers/ProvinceController.js';
 
-import authenticationRoutes from './routes/api/authenticationRoutes.js';
-import memberRoutes from './routes/api/memberRoutes.js';
-import provinceRoutes from './routes/api/provinceRoutes.js';
+import authenticationRoutes from './src/routes/api/authenticationRoutes.js';
+import memberRoutes from './src/routes/api/memberRoutes.js';
+import provinceRoutes from './src/routes/api/provinceRoutes.js';
 
 dotenv.config();
 

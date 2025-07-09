@@ -1,5 +1,5 @@
-import JwtService from '/home/user/Oilos.id/src/services/JwtService.js';
-import MemberService from '/home/user/Oilos.id/src/services/MemberService.js';
+import JwtService from './../services/JwtService.js';
+import MemberService from './../services/MemberService.js';
 
 const MemberController = { 
     init: (pool) => {

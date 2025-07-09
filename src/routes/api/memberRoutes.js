@@ -1,6 +1,6 @@
 import express from 'express';
-import MemberController from '../../src/controllers/MemberController.js';
-import AuthGuardService from '../../src/services/AuthGuardService.js';
+import MemberController from '../../controllers/MemberController.js';
+import AuthGuardService from '../../services/AuthGuardService.js';
 
 const router = express.Router();
 

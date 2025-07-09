@@ -85,26 +85,13 @@ const swaggerOptions = {
           }
         }
       },
-      '/api/getAllProvinces': {
-        get: {
-          summary: 'Get all provinces',
-          description: 'Retrieve a list of all provinces.',
-          parameters: [],
-          responses: {
-            200: {
-              description: 'A list of provinces',
-              content: { 'application/json': {} },
-            },
-          },
-        },
-      },
     }
   },
   apis: [
-    '/home/user/Oilos.id/server.js',
-    '/home/user/Oilos.id/routes/api/memberRoutes.js',
-    '/home/user/Oilos.id/routes/api/authenticationRoutes.js',
-    '/home/user/Oilos.id/routes/api/provinceRoutes.js'
+    './server.js',
+    './src/routes/api/memberRoutes.js',
+    './src/routes/api/authenticationRoutes.js',
+    './src/routes/api/provinceRoutes.js'
   ], // Path to the API routes file(s)
 };
 // Generate Swagger specification

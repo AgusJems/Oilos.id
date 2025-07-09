@@ -13,7 +13,7 @@ const ProvinceService = {
         try {
             const query = 'SELECT * FROM provinces';
             const result = await dbPool.query(query);
-            return result.rows;
+            return result[0];
         } catch (error) {
             console.error('Error fetching provinces:', error);
             throw error; // Re-throw the error for the controller to handle
