@@ -1,9 +1,7 @@
 // server.js
-import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import mysql from 'mysql2/promise';
 import swaggerSpec from './swagger.js';
 
 import AuthenticationController from './src/controllers/AuthenticationController.js';
@@ -13,20 +11,7 @@ import ProvinceController from './src/controllers/ProvinceController.js';
 import authenticationRoutes from './src/routes/api/authenticationRoutes.js';
 import memberRoutes from './src/routes/api/memberRoutes.js';
 import provinceRoutes from './src/routes/api/provinceRoutes.js';
-
-dotenv.config();
-
-// Create the database connection pool
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  waitForConnections: true,
-  connectionLimit: 10, // Adjust the limit as needed
-  queueLimit: 0
-});
+import cityRoutes from './src/routes/city.routes.js';
 
 const envSetting = {
   secretKey: process.env.SECRET_KEY
@@ -39,9 +24,7 @@ const reqEmail = {
 }
 
 // Initialize the messageController with the database pool
-AuthenticationController.init(pool, envSetting, reqEmail);
-MemberController.init(pool);
-ProvinceController.init(pool);
+AuthenticationController.init(envSetting, reqEmail);
 
 const app = express();
 const port = 3001;
@@ -52,6 +35,7 @@ app.use(express.json());
 app.use('/api', authenticationRoutes);
 app.use('/api', memberRoutes);
 app.use('/api', provinceRoutes);
+app.use('/api', cityRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
