@@ -1,10 +1,11 @@
 import express from 'express';
 import MemberController from '../../controllers/MemberController.js';
-import AuthGuardService from '../../services/AuthGuardService.js';
+// import AuthGuardService from '../../services/AuthGuardService.js';
 
 const router = express.Router();
 
-router.get('/getAllUsers', AuthGuardService.AuthGuardAdmin, MemberController.getAllUsers);
+router.get('/getAllUsers', MemberController.getAllUsers);
+// router.get('/getAllUsers', AuthGuardService.AuthGuardAdmin, MemberController.getAllUsers);
 
 /**
  * @swagger
