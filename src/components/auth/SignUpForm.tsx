@@ -57,7 +57,7 @@ export default function SignUpForm() {
     identity: "",
     phone: "",
     email: "",
-    area: "",
+    cityId: "",
     codeRefferal: "",
   });
 
@@ -198,7 +198,7 @@ export default function SignUpForm() {
               />
             </div>
             <div>
-              <Label>Identity *</Label>
+              <Label>NIK *</Label>
               <Input
                 name="identity"
                 value={formData.identity}
