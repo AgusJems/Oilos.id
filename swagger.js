@@ -90,9 +90,9 @@ const swaggerOptions = {
   apis: [
     './server.js',
     './src/routes/api/memberRoutes.js',
-    './src/routes/api/authenticationRoutes.js',
     './src/routes/api/provinceRoutes.js',
-    './src/routes/city.routes.js'
+    './src/routes/authentication.routes.js',
+    './src/routes/city.routes.js',
   ], // Path to the API routes file(s)
 };
 // Generate Swagger specification
