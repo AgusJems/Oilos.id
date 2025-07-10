@@ -21,11 +21,14 @@ const AuthenticationController = {
 
         try {
             // Gunakan pool langsung (tanpa getConnection)
-            const [rows] = await pool.query(
-                `SELECT u.Id, u.Username, u.Password, u.RoleId, u.Name, u.Identity, u.Phone, u.Email, u.Area, u.CodeRefferal, r.Code AS RoleCode, r.Name AS RoleName
+            const [rows] = await pool.query(`
+                SELECT u.username, u.password, u.name, u.identity, u.phone, u.email, u.code, u.code_referral, u.status, r.code roles_code, r.name roles_name, c.name cities_name, p.name provinces_name
                 FROM users u
-                INNER JOIN roles r ON r.Id = u.RoleId
-                WHERE u.Username = ? AND u.Status = 1`,
+                JOIN roles r ON r.id = u.roles_id
+                JOIN cities c ON c.id = u.cities_id
+                JOIN provinces p ON p.id = c.provinces_id
+                WHERE u.username = ? AND u.status = 1
+                `,
                 [username]
             );
 
@@ -34,20 +37,21 @@ const AuthenticationController = {
             }
 
             const user = rows[0];
+            console.log('User found:', user);
 
-            if (password === user.Password) {
+            if (password === user.password) {
                 const token = jwt.sign(
                     {
-                        Username: user.Username,
-                        RoleId: user.RoleId,
+                        username: user.username,
+                        name: user.name,
+                        identity: user.identity,
+                        phone: user.phone,
+                        email: user.email,
+                        code: user.code,
                         RoleCode: user.RoleCode,
                         RoleName: user.RoleName,
-                        Name: user.Name,
-                        Identity: user.Identity,
-                        Phone: user.Phone,
-                        Email: user.Email,
-                        Area: user.Area,
-                        CodeRefferal: user.CodeRefferal
+                        CityName: user.CityName,
+                        ProvinceName: user.ProvinceName
                     },
                     EnvSetting.secretKey // Replace with a strong, secret key
                 );
