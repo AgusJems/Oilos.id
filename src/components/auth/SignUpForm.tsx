@@ -28,13 +28,13 @@ const customStyles = {
   };
 
 interface Province {
-  Id: number;
-  Name: string;
+  id: number;
+  name: string;
 }
 
 interface City {
-  Id: number;
-  Name: string;
+  id: number;
+  name: string;
 }
 
 interface OptionType {
@@ -68,32 +68,31 @@ export default function SignUpForm() {
       .then((response) => {
         const data: Province[] = response.data;
         const formatted = data.map((prov) => ({
-          value: prov.Id,
-          label: prov.Name,
+          value: prov.id,
+          label: prov.name,
         }));
         setProvinsiOptions(formatted);
       })
       .catch((err) => console.error("Error fetching provinsi:", err));
   }, []);
 
-  // Fetch kota berdasarkan provinsi
-  const handleProvinsiChange = (option: SingleValue<OptionType>) => {
+    const handleProvinsiChange = (option: SingleValue<OptionType>) => {
     setSelectedProvinsi(option);
-    setSelectedKota(null); // Reset kota
+    setSelectedKota(null);
 
-    if (option) {
-      fetch(`http://localhost:3001/api/getAllCity?idProvinsi=${option.value}`)
-        .then((res) => res.json())
-        .then((response) => {
-          const data: City[] = response.data;
-          const formatted = data.map((city) => ({
-            value: city.Id,
-            label: city.Name,
-          }));
-          setKotaOptions(formatted);
-        })
-        .catch((err) => console.error("Error fetching kota:", err));
-    }
+    if (!option) return;
+
+    fetch(`http://localhost:3001/api/getCityByProvinceId/${option.value}`)
+      .then((res) => res.json())
+      .then((response) => {
+        const data: City[] = response.data;
+        const formatted = data.map((city) => ({
+          value: city.id,
+          label: city.name,
+        }));
+        setKotaOptions(formatted);
+      })
+      .catch((err) => console.error("Error fetching kota:", err));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
