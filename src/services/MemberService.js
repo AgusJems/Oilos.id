@@ -15,13 +15,33 @@ const MemberService = {
         }
     },
 
-    getUserById: async (userId) => {
+    // getUserById: async (id) => {
+    //     if (!pool) {
+    //         throw new Error("Database pool not initialized in cityService.");
+    //     }
+    //     try {
+    //         const sql = `SELECT * FROM users WHERE id = 1`;
+    //         // Using pool.query or pool.execute is fine, but ensure you use the same method consistently
+    //         const [rows] = await pool.execute(sql, [id]);
+    //         console.log(id, rows);
+    //         return rows[0]; // Assuming user ID is unique, return the first row
+    //     } catch (error) {
+    //         console.error(`Error fetching user with ID ${id}:`, error);
+    //         throw error;
+    //     }
+    // },
+    getUserById: async (id) => {
+        if (!pool) {
+            throw new Error("Database pool not initialized in cityService.");
+        }
+
         try {
-            const [rows] = await pool.query('SELECT * FROM users WHERE Id = ?', [userId]);
-            return rows[0]; // Assuming user ID is unique, return the first row
+            const query = 'SELECT * FROM users WHERE Id = ?';
+            const [result] = await pool.query(query, [id]);
+            return result;
         } catch (error) {
-            console.error(`Error fetching user with ID ${userId}:`, error);
-            throw error;
+            console.error('Error fetching users:', error);
+            throw error; // Re-throw the error for the controller to handle
         }
     },
 

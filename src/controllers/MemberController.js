@@ -23,8 +23,8 @@ const MemberController = {
 
     getUserById: async (req, res) => {
         try {
-            const userId = req.params.id;
-            const rows = await MemberService.getUserById(userId);
+            const id = req.params.id;
+            const rows = await MemberService.getUserById(id);
             if (rows && rows.length > 0) {
                 res.status(200).json({ data: rows[0] });
             } else {
