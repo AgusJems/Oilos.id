@@ -16,7 +16,7 @@ const envSetting = {
 }
 
 const reqEmail = {
-  host: process.env.API_URL,
+  host: process.env.APP_URL,
   user: process.env.EMAIL_USER,
   password: process.env.EMAIL_PASS,
 }
