@@ -13,7 +13,7 @@ const authenticationService = {
                 JOIN roles r ON r.id = u.roles_id
                 JOIN cities c ON c.id = u.cities_id
                 JOIN provinces p ON p.id = c.provinces_id
-                WHERE u.username = ? AND u.status = 1
+                WHERE u.username = ?
             `;
             const result = await pool.query(query, [username]);
             return result;

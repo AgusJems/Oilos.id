@@ -34,6 +34,13 @@ const AuthenticationController = {
       const user = rows[0];
       console.log("User found:", user);
 
+      // Check if the user is verified
+      if (user.status === 0) {
+        return res
+          .status(403)
+          .json({ message: "User is not verified. Please check your email." });
+      }
+
       if (password === user.password) {
         const token = jwt.sign(
           user,
