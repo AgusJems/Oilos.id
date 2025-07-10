@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllCities, getCityById} from '../controllers/city.controller.js';
+import {getAllCities, getCityByProvinceId} from '../controllers/city.controller.js';
 const router = express.Router();
 /**
  * @swagger
@@ -55,9 +55,9 @@ router.get('/getAllCities', getAllCities);
 
 /**
  * @swagger
- * /api/getCityById/{id}:
+ * /api/getCityByProvinceId/{id}:
  *   get:
- *     summary: Get a city by its ID
+ *     summary: Get a city by Province ID
  *     tags: [Cities]
  *     parameters:
  *       - in: path
@@ -65,7 +65,7 @@ router.get('/getAllCities', getAllCities);
  *         schema:
  *           type: integer
  *         required: true
- *         description: The city ID
+ *         description: The Province ID
  *     responses:
  *       200:
  *         description: The city data.
@@ -78,6 +78,6 @@ router.get('/getAllCities', getAllCities);
  *       500:
  *         description: Server error
  */
-router.get('/getCityById/:id', getCityById);
+router.get('/getCityByProvinceId/:id', getCityByProvinceId);
 
 export default router;

@@ -1,4 +1,3 @@
-import pool from '../../config/db.js';
 import cityService from '../services/city.service.js';
 
 // 2. Use the pool in your controller functions
@@ -13,14 +12,21 @@ export const getAllCities = async (req, res) => {
   }
 };
 
-export const getCityById = async (req, res) => {
+export const getCityByProvinceId = async (req, res) => {
     const { id } = req.params;
     try {
-        const [rows] = await pool.query('SELECT * FROM cities WHERE id = ?', [id]);
+        // Validate the ID
+        if (!id || isNaN(id)) {
+            return res.status(400).json({ message: 'Invalid city ID.' });
+        }
+
+        // Get the city by ID
+        const [rows] = await cityService.getCityByProvinceId(id);
+        console.log(`City with ID ${id} found:`, rows);
         if (rows.length === 0) {
             return res.status(404).json({ message: 'City not found.' });
         }
-        res.status(200).json(rows[0]);
+        res.status(200).json({data: rows}); // Return the city found
     } catch (error) {
         console.error(`Error fetching city with id ${id}:`, error);
         res.status(500).json({ message: 'An error occurred while fetching the city.' });
