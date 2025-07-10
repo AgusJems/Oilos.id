@@ -16,6 +16,25 @@ const cityService = {
         }
     },
     
+    getCityById: async (id) => {
+        if (!pool) {
+            throw new Error("Database pool not initialized in cityService.");
+        }
+
+        try {
+            const query = `
+                SELECT * 
+                FROM cities
+                WHERE id = ?
+            `;
+            const [result] = await pool.query(query, [id]);
+            return result;
+        } catch (error) {
+            console.error('Error fetching users:', error);
+            throw error; // Re-throw the error for the controller to handle
+        }
+    },
+
     getCityByProvinceId: async (id) => {
         if (!pool) {
             throw new Error("Database pool not initialized in cityService.");

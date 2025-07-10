@@ -6,8 +6,8 @@ import swaggerSpec from './swagger.js';
 
 import AuthenticationController from './src/controllers/AuthenticationController.js';
 
-import memberRoutes from './src/routes/api/memberRoutes.js';
 import authenticationRoutes from './src/routes/authentication.routes.js';
+import memberRoutes from './src/routes/member.routes.js';
 import provinceRoutes from './src/routes/province.routes.js';
 import cityRoutes from './src/routes/city.routes.js';
 

@@ -19,12 +19,15 @@ const swaggerOptions = {
             identity: { type: 'string' },
             phone: { type: 'string' },
             email: { type: 'string' },
-            area: { type: 'string' },
+            code: { type: 'string' },
+            code_referral: { type: 'string' },
+            roles_code: { type: 'string' },
+            roles_name: { type: 'string' },
+            cities_name: { type: 'string' },
+            provinces_name: { type: 'string' },
             status: { type: 'integer' },
-            createdAt: { type: 'string', format: 'date-time' },
-            updatedAt: { type: 'string', format: 'date-time' },
           },
-          required: ['id', 'username', 'name', 'identity', 'phone', 'email', 'area', 'status', 'createdAt', 'updatedAt'],
+          required: ['id', 'username', 'name', 'identity', 'phone', 'email', 'area', 'status', 'roles_code', 'roles_name', 'cities_name', 'provinces_name'],
         },
         UserUpdateInput: {
           type: 'object',
@@ -40,7 +43,7 @@ const swaggerOptions = {
             phone: { type: 'string' },
             email: { type: 'string' },
             area: { type: 'string' },
-            codeRefferal: { type: 'string' },
+            codeReferral: { type: 'string' },
           },
         },
         securitySchemes: {
@@ -54,43 +57,11 @@ const swaggerOptions = {
       },
 
     },
-    paths: {
-      '/api/getAllUsers': {
-        get: {
-          summary: 'Get all users',
-          description: 'Retrieve a list of all registered users. This endpoint requires authentication.',
-          responses: {
-            200: {
-              description: 'A list of users.',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'array',
-                    items: {
-                      $ref: '#/components/schemas/User', // Reference to a User schema definition
-                    },
-                  },
-                },
-              }
-            },
-            401: {
-              description: 'Unauthorized - No token provided or token is invalid'
-            },
-            403: {
-              description: 'Forbidden - User does not have sufficient permissions'
-            },
-            500: {
-              description: 'Internal server error'
-            }
-          }
-        }
-      },
-    }
   },
   apis: [
     './server.js',
-    './src/routes/api/memberRoutes.js',
     './src/routes/authentication.routes.js',
+    './src/routes/member.routes.js',
     './src/routes/province.routes.js',
     './src/routes/city.routes.js',
   ], // Path to the API routes file(s)

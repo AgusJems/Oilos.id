@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 import { format } from 'date-fns';
 import pool from '../../config/db.js';
 import authenticationService from '../services/authentication.service.js';
-import { use } from 'react';
+import cityService from '../services/city.service.js';
 
 let EnvSetting;
 let ReqEmail;
@@ -50,20 +50,22 @@ const AuthenticationController = {
 
     register: async (req, res) => {
         try {
-            const { username, password, name, identity, phone, email, provinceCode, cityCode, codeRefferal } = req.body;
+            const { username, password, name, identity, phone, email, codeReferral, cityId } = req.body;
             const verificationToken = crypto.randomBytes(20).toString('hex');
 
             if (!username || !password) {
                 return res.status(400).json({ message: 'Username and password are required' });
             }
 
-            const [existingUsers] = await pool.query(
-                'SELECT * FROM users WHERE Username = ? OR Identity = ?',
-                [username, identity]
-            );
+            const [existingUsers] = await authenticationService.getDetailUser(username);
+            const [rowCity] = await cityService.getCityById(cityId);
 
             if (existingUsers.length > 0) {
                 return res.status(400).json({ message: 'Username OR Identity already exists' });
+            }
+            
+            if (rowCity.length === 0) {
+                return res.status(400).json({ message: 'Invalid city ID' });
             }
 
             const words = username.split(' ');
@@ -73,14 +75,14 @@ const AuthenticationController = {
                     initial += word[0].toUpperCase();
                 }
             }
+            const cityCode = rowCity[0].code.replace('.', '');
 
             const registrationDateTime = format(new Date(), 'ddMMyyyyHm');
-            let generateCode = `${initial}-${provinceCode}${cityCode}${registrationDateTime}`;
+            let generateCode = `${initial}-${cityCode}${registrationDateTime}`;
         
             // Insert user with status 0 (unverified) and verification token
-            await pool.query(
-                'INSERT INTO users (Username, Password, RoleId, Name, Identity, Phone, Email, ProvinceCode, CityCode, CodeRefferal, verificationToken, Status, CreatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [username, password, 2, name, identity, phone, email, provinceCode, cityCode, generateCode, verificationToken, 0, username]
+            await authenticationService.insertDetailUser(
+                username, password, name, identity, phone, email, generateCode, codeReferral, verificationToken, cityId
             );
 
             // Send verification email
@@ -116,9 +118,9 @@ const AuthenticationController = {
 
     verifyEmail: async (req, res) => {
         const { token } = req.query;
-        const [rows] = await pool.query('SELECT * FROM users WHERE verificationToken = ?', [token]);
+        const [rows] = await authenticationService.getUserByToken(token);
         if (rows.length === 0) return res.status(400).json({ message: 'Invalid verification token' });
-        await pool.query('UPDATE users SET Status = 1, verificationToken = NULL WHERE verificationToken = ?', [token]);
+        await authenticationService.verifyEmail(token);
         return res.status(200).json({ message: 'Email verified successfully' });
     }
 };
