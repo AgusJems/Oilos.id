@@ -5,7 +5,7 @@ const MemberService = {
         try {
             const [rows] = await pool.query(`
                 SELECT 
-                    u.username, u.name, u.identity, u.phone, u.email, u.code, u.code_referral, u.status, r.code RoleCode, r.name RoleName, c.name CityName, p.name ProvinceName
+                    u.username, u.name, u.identity, u.phone, u.email, u.code, u.code_referral, u.status, r.code roles_code, r.name roles_name, c.name cities_name, p.name provinces_name
                 FROM users u
                 JOIN roles r ON r.id = u.roles_id
                 JOIN cities c ON c.id = u.cities_id
