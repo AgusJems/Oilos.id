@@ -3,6 +3,8 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { format } from 'date-fns';
 import pool from '../../config/db.js';
+import authenticationService from '../services/authentication.service.js';
+import { use } from 'react';
 
 let EnvSetting;
 let ReqEmail;
@@ -21,16 +23,7 @@ const AuthenticationController = {
 
         try {
             // Gunakan pool langsung (tanpa getConnection)
-            const [rows] = await pool.query(`
-                SELECT u.username, u.password, u.name, u.identity, u.phone, u.email, u.code, u.code_referral, u.status, r.code roles_code, r.name roles_name, c.name cities_name, p.name provinces_name
-                FROM users u
-                JOIN roles r ON r.id = u.roles_id
-                JOIN cities c ON c.id = u.cities_id
-                JOIN provinces p ON p.id = c.provinces_id
-                WHERE u.username = ? AND u.status = 1
-                `,
-                [username]
-            );
+            const [rows] = await authenticationService.getDetailUser(username);
 
             if (rows.length === 0) {
                 return res.status(401).json({ message: 'Invalid username or password' });
