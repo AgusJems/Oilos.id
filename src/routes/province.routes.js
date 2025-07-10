@@ -1,7 +1,15 @@
 import express from 'express';
-import ProvinceController from '../../controllers/ProvinceController.js';
+import ProvinceController from '../controllers/ProvinceController.js';
 
 const router = express.Router();
+
+/**
+ * @swagger
+ * tags:
+ *   name: Provinces
+ *   description: API for managing provinces
+ */
+
 
 /**
  * @openapi
