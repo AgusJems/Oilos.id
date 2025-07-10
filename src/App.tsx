@@ -35,6 +35,7 @@ import BeritaDetail from "./landing/components/Berita/BeritaDetail";
 import Order from "./landing/components/Pemesanan/Order/page";
 import OrderDetail from "./landing/components/Pemesanan/OrderDetail/page";
 import CartPage from "./landing/components/Pemesanan/Cart/page";
+import EmailVerificationNotice from "./components/auth/EmailVerificationNotice";
 
 export default function App() {
    useEffect(() => {
@@ -90,6 +91,7 @@ export default function App() {
           {/* Auth Layout */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/verify-email-notice" element={<EmailVerificationNotice />} />
 
           <Route element={<LandingLayout />}>
             <Route path="/landing" element={<LandingPage />} />

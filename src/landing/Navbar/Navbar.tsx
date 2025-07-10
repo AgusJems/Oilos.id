@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 interface DecodedUser {
-  Name?: string;
-  CodeRefferal?: string;
+  name?: string;
+  code_referral?: string;
 }
 
 const Navbar: React.FC = () => {
@@ -140,7 +140,7 @@ const Navbar: React.FC = () => {
                   onClick={toggleDropdown}
                   className="flex items-center justify-center w-14 h-14 text-2xl font-bold text-green-800 bg-green-100 rounded-full cursor-pointer"
                 >
-                  {user.Name?.charAt(0).toUpperCase() || "U"}
+                  {user.name?.charAt(0).toUpperCase() || "U"}
                 </div>
 
                 {/* Dropdown */}
@@ -167,10 +167,10 @@ const Navbar: React.FC = () => {
                 {/* Nama dan Kode */}
                 <div className="order-3 xl:order-2">
                   <h4 className="mb-1 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
-                    {user.Name || "User"}
+                    {user.name || "User"}
                   </h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400 text-center xl:text-left">
-                    {user.CodeRefferal || "-"}
+                    {user.code_referral || "-"}
                   </p>
                 </div>
               </div>

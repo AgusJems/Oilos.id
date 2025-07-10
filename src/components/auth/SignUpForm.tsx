@@ -7,25 +7,25 @@ import Checkbox from "../form/input/Checkbox";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import { appSetting } from "../../../appSetting";
 
-//dropdown custom
+// dropdown custom style
 const customStyles = {
   control: (base: any, state: any) => ({
-      ...base,
-      backgroundColor: state.isFocused ? "#f0fdf4" : "white",
-      borderColor: state.isFocused ? "#22c55e" : "#e5e7eb",
-      boxShadow: state.isFocused ? "0 0 0 2px rgba(34, 197, 94, 0.3)" : undefined,
-      "&:hover": {
-        borderColor: "#22c55e",
-      },
-      padding: "2px",
-      fontSize: "14px",
-    }),
-    menu: (base: any) => ({
-      ...base,
-      zIndex: 9999,
-      fontSize: "14px",
-    }),
-  };
+    ...base,
+    backgroundColor: state.isFocused ? "#f0fdf4" : "white",
+    borderColor: state.isFocused ? "#22c55e" : "#e5e7eb",
+    boxShadow: state.isFocused ? "0 0 0 2px rgba(34, 197, 94, 0.3)" : undefined,
+    "&:hover": {
+      borderColor: "#22c55e",
+    },
+    padding: "2px",
+    fontSize: "14px",
+  }),
+  menu: (base: any) => ({
+    ...base,
+    zIndex: 9999,
+    fontSize: "14px",
+  }),
+};
 
 interface Province {
   id: number;
@@ -50,7 +50,17 @@ export default function SignUpForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [formData, setFormData] = useState({
+
+  const [formData, setFormData] = useState<{
+    username: string;
+    password: string;
+    name: string;
+    identity: string;
+    phone: string;
+    email: string;
+    cityId: number | "";
+    codeReferral: string;
+  }>({
     username: "",
     password: "",
     name: "",
@@ -58,10 +68,9 @@ export default function SignUpForm() {
     phone: "",
     email: "",
     cityId: "",
-    codeRefferal: "",
+    codeReferral: "",
   });
 
-  // Fetch provinsi
   useEffect(() => {
     fetch("http://localhost:3001/api/getAllProvinces")
       .then((res) => res.json())
@@ -76,9 +85,10 @@ export default function SignUpForm() {
       .catch((err) => console.error("Error fetching provinsi:", err));
   }, []);
 
-    const handleProvinsiChange = (option: SingleValue<OptionType>) => {
+  const handleProvinsiChange = (option: SingleValue<OptionType>) => {
     setSelectedProvinsi(option);
     setSelectedKota(null);
+    setFormData((prev) => ({ ...prev, cityId: "" }));
 
     if (!option) return;
 
@@ -106,15 +116,16 @@ export default function SignUpForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validasi field wajib
+    // Validasi wajib
     if (
       !formData.username ||
       !formData.password ||
       !formData.name ||
       !formData.identity ||
-      !formData.phone
+      !formData.phone ||
+      formData.cityId === ""
     ) {
-      alert("Mohon lengkapi semua field yang bertanda * (wajib).");
+      alert("Mohon lengkapi semua field yang bertanda * (wajib), termasuk Kota.");
       return;
     }
 
@@ -133,8 +144,7 @@ export default function SignUpForm() {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Registrasi berhasil!");
-        navigate("/signin");
+        navigate("/verify-email-notice");
       } else {
         alert(data.message || "Registrasi gagal");
       }
@@ -224,9 +234,10 @@ export default function SignUpForm() {
                 placeholder="example@email.com"
               />
             </div>
+
             {/* Provinsi */}
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-white">Provinsi</label>
+              <Label>Provinsi</Label>
               <Select
                 options={provinsiOptions}
                 value={selectedProvinsi}
@@ -239,26 +250,34 @@ export default function SignUpForm() {
 
             {/* Kota */}
             <div>
-              <label className="block mb-1 font-medium text-gray-700 dark:text-white">Kota</label>
+              <Label>Kota *</Label>
               <Select
                 options={kotaOptions}
                 value={selectedKota}
-                onChange={(opt) => setSelectedKota(opt)}
+                onChange={(opt) => {
+                  setSelectedKota(opt);
+                  setFormData((prev) => ({
+                    ...prev,
+                    cityId: opt ? opt.value : "",
+                  }));
+                }}
                 styles={customStyles}
                 placeholder="Pilih Kota"
                 isDisabled={!selectedProvinsi}
                 classNamePrefix="react-select"
               />
             </div>
+
             <div>
               <Label>Code Refferal</Label>
               <Input
-                name="codeRefferal"
-                value={formData.codeRefferal}
+                name="codeReferral"
+                value={formData.codeReferral}
                 onChange={handleChange}
                 placeholder="Kode Referensi"
               />
             </div>
+
             <div className="flex items-center gap-3">
               <Checkbox
                 className="w-5 h-5"
@@ -277,12 +296,14 @@ export default function SignUpForm() {
                 .
               </p>
             </div>
+
             <button
               type="submit"
               className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-green-500 shadow-theme-xs hover:bg-green-600"
             >
               Sign Up
             </button>
+
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Sudah punya akun?{" "}
