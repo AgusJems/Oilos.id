@@ -42,8 +42,9 @@ export default function SignInForm() {
       const data = await res.json();
 
       if (!res.ok) {
+        navigate("/check-verify-email-notice");
+      } else {
         alert(data.message || "Login gagal");
-        return;
       }
 
       localStorage.setItem("token", data.token);
@@ -68,7 +69,7 @@ export default function SignInForm() {
 
     } catch (err) {
       console.error("Login error:", err);
-      alert("Terjadi kesalahan server.");
+      navigate("/check-verify-email-notice");
     }
   };
 
