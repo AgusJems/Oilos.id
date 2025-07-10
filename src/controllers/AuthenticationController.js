@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { format } from 'date-fns';
-import pool from '../../config/db.js';
 import authenticationService from '../services/authentication.service.js';
 import cityService from '../services/city.service.js';
 
@@ -59,6 +58,7 @@ const AuthenticationController = {
 
             const [existingUsers] = await authenticationService.getDetailUser(username);
             const [rowCity] = await cityService.getCityById(cityId);
+            console.log('Row City:', rowCity);
 
             if (existingUsers.length > 0) {
                 return res.status(400).json({ message: 'Username OR Identity already exists' });
@@ -75,7 +75,7 @@ const AuthenticationController = {
                     initial += word[0].toUpperCase();
                 }
             }
-            const cityCode = rowCity[0].code.replace('.', '');
+            const cityCode = rowCity.code.replace('.', '');
 
             const registrationDateTime = format(new Date(), 'ddMMyyyyHm');
             let generateCode = `${initial}-${cityCode}${registrationDateTime}`;
@@ -91,6 +91,9 @@ const AuthenticationController = {
                 auth: {
                     user: ReqEmail.user, // Replace with your email
                     pass: ReqEmail.password // Replace with your email password or app-specific password
+                },  // Add this TLS option to fix the self-signed certificate error
+                tls: {
+                    rejectUnauthorized: false
                 }
             });
 
