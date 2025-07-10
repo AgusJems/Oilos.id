@@ -34,7 +34,7 @@ export default function UserDropdown() {
         </span>
 
         <span className="block mr-1 font-medium text-theme-sm">
-          {user?.Name ?? "Guest"}
+          {user?.name ?? "Guest"}
         </span>
 
         <svg
@@ -62,10 +62,10 @@ export default function UserDropdown() {
       >
         <div>
           <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-            {user?.Name ?? "Guest"}
+            {user?.name ?? "Guest"}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-            {user?.Email ?? "unknown@example.com"}
+            {user?.email ?? "unknown@example.com"}
           </span>
         </div>
 
