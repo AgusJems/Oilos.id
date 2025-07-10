@@ -124,8 +124,8 @@ router.post('/login', AuthenticationController.login);
  *                 format: email
  *                 description: The user's email address.
  *               cityId:
- *                 type: string
- *                 description: The user's geographical area.
+ *                 type: integer
+ *                 description: The ID of the city where the user resides.
  *               codeReferral:
  *                 type: string
  *                 description: Optional referral code.
