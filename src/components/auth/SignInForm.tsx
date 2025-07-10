@@ -9,16 +9,18 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 interface DecodedUser {
-  Username: string;
-  RoleCode: string;
-  RoleName: string;
-  Name: string;
-  Identity: string;
-  Email?: string | null;
-  Phone?: string | null;
-  Area?: string | null;
-  CodeRefferal?: string;
-  iat?: number;
+  username: string,
+  name: string,
+  identity: string,
+  phone: string,
+  email: string,
+  code: string,
+  roles_code: string,
+  roles_name: string,
+  cities_name: string,
+  provinces_name: string
+  status: string
+  iat: number;
 }
 
 export default function SignInForm() {
@@ -50,7 +52,7 @@ export default function SignInForm() {
       const decoded: DecodedUser = jwtDecode(data.token);
       console.log("JWT Decoded:", decoded);
 
-      switch (decoded.RoleCode) {
+      switch (decoded.roles_code) {
         case "A-0":
           navigate("/dashboard");
           break;

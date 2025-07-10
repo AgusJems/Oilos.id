@@ -1,17 +1,18 @@
 import { jwtDecode } from "jwt-decode";
 
 export interface DecodedUser {
-  Username: string;
-  RoleId: number;
-  RoleCode: string;
-  RoleName: string;
-  Name: string;
-  Identity: string;
-  Phone?: string | null;
-  Email?: string | null;
-  Area?: string | null;
-  CodeRefferal?: string;
-  iat?: number;
+  username: string,
+  name: string,
+  identity: string,
+  phone: string,
+  email: string,
+  code: string,
+  roles_code: string,
+  roles_name: string,
+  cities_name: string,
+  provinces_name: string
+  status: string
+  iat: number;
 }
 
 export function decodeToken(token: string): DecodedUser | null {
