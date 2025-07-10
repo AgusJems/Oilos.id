@@ -115,15 +115,99 @@ const AuthenticationController = {
       emailTransporter.sendEmail({
         email: email,
         subject: "Email Verification",
-        body: `Click the following link to verify your email: ${ReqEmail.host}/verify-email?token=${verificationToken}`,
+        body: `
+        <!DOCTYPE html>
+        <html lang="en" style="margin:0; padding:0;">
+        <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Please verify your email address</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            color: #333333;
+            }
+            .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+            }
+            h1 {
+            color: #004aad;
+            font-size: 24px;
+            margin-bottom: 20px;
+            }
+            p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            }
+            .btn-verify {
+            background-color: #004aad;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 14px 28px;
+            font-weight: bold;
+            border-radius: 5px;
+            display: inline-block;
+            }
+            .footer {
+            font-size: 12px;
+            color: #999999;
+            text-align: center;
+            margin-top: 40px;
+            }
+            @media only screen and (max-width: 620px) {
+            .container {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .btn-verify {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+            }
+        </style>
+        </head>
+        <body>
+        <div class="container" role="main">
+            <h1>Verify Your Email Address</h1>
+            <p>
+            Welcome! To complete your registration, please verify your email address by clicking the button below.
+            </p>
+            <p>
+            <a href="${ReqEmail.host}/api/verify-email?token=${verificationToken}" class="btn-verify" target="_blank" rel="noopener">
+                Verify Email Address
+            </a>
+            </p>
+            <p>If you did not create an account with us, please ignore this email.</p>
+            <div class="footer">
+            &copy; 2025 Your Company. All rights reserved.
+            </div>
+        </div>
+        </body>
+        </html>
+        `,
       });
 
-      return res
-        .status(201)
-        .json({
-          message:
-            "User registered successfully. Please check your email for verification.",
-        });
+      return res.status(201).json({
+        message:
+          "User registered successfully. Please check your email for verification.",
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Internal server error" });
