@@ -41,18 +41,7 @@ const AuthenticationController = {
 
             if (password === user.password) {
                 const token = jwt.sign(
-                    {
-                        username: user.username,
-                        name: user.name,
-                        identity: user.identity,
-                        phone: user.phone,
-                        email: user.email,
-                        code: user.code,
-                        RoleCode: user.RoleCode,
-                        RoleName: user.RoleName,
-                        CityName: user.CityName,
-                        ProvinceName: user.ProvinceName
-                    },
+                    user,
                     EnvSetting.secretKey // Replace with a strong, secret key
                 );
                 return res.status(200).json({ message: 'Login successful', token: token });
