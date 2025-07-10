@@ -16,7 +16,7 @@ const transporterConfig = {
 const transporter = nodemailer.createTransport(transporterConfig);
 
 const emailTransporter = {    
-    sendEmail: async (email, subject, body) => {
+    sendEmail: async ({email, subject, body}) => {
       try {
         const mailOptions = {
           from: process.env.EMAIL_FROM,
