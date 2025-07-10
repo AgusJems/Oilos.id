@@ -23,7 +23,6 @@ const AuthenticationController = {
     }
 
     try {
-      // Gunakan pool langsung (tanpa getConnection)
       const [rows] = await authenticationService.getDetailUser(username);
 
       if (rows.length === 0) {
