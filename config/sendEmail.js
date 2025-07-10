@@ -22,7 +22,7 @@ const emailTransporter = {
           from: process.env.EMAIL_FROM,
           to: email,
           subject: subject,
-          text: body,
+          html: body,
         };
 
         // Send a email (optional)
