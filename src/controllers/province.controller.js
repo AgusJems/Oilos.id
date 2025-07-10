@@ -1,5 +1,5 @@
 import { data } from 'react-router';
-import ProvinceService from './../services/ProvinceService.js';
+import ProvinceService from '../services/province.service.js';
 
 const ProvinceController = { 
 

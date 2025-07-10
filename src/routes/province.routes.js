@@ -1,5 +1,5 @@
 import express from 'express';
-import ProvinceController from '../controllers/ProvinceController.js';
+import ProvinceController from '../controllers/province.controller.js';
 
 const router = express.Router();
 

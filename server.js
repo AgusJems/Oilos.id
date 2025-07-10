@@ -4,7 +4,7 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger.js';
 
-import AuthenticationController from './src/controllers/AuthenticationController.js';
+import AuthenticationController from './src/controllers/authentication.controller.js';
 
 import authenticationRoutes from './src/routes/authentication.routes.js';
 import memberRoutes from './src/routes/member.routes.js';

@@ -1,5 +1,5 @@
-import JwtService from './../services/JwtService.js';
-import MemberService from './../services/MemberService.js';
+import JwtService from '../services/jwt.service.js';
+import MemberService from '../services/member.service.js';
 
 const MemberController = { 
 
