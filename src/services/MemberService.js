@@ -4,9 +4,12 @@ const MemberService = {
     getAllUsers: async () => {
         try {
             const [rows] = await pool.query(`
-                SELECT U.Id, U.Username, U.Name, U.Identity, U.Phone, U.Email, U.Area, U.CodeRefferal, R.Code AS RoleCode
-                FROM users U
-                INNER JOIN roles R ON R.Id = U.RoleId
+                SELECT 
+                    u.username, u.name, u.identity, u.phone, u.email, u.code, u.code_referral, u.status, r.code RoleCode, r.name RoleName, c.name CityName, p.name ProvinceName
+                FROM users u
+                JOIN roles r ON r.id = u.roles_id
+                JOIN cities c ON c.id = u.cities_id
+                JOIN provinces p ON p.id = c.provinces_id
             `);
             return rows;
         } catch (error) {
