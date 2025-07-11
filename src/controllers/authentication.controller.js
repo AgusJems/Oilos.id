@@ -197,7 +197,7 @@ const AuthenticationController = {
             Welcome! To complete your registration, please verify your email address by clicking the button below.
             </p>
             <p>
-            <a href="${ReqEmail.host}/verify-success?token=${verificationToken}" class="btn-verify" target="_blank" rel="noopener">
+            <a href="${ReqEmail.host}/verify-email?token=${verificationToken}" class="btn-verify" target="_blank" rel="noopener">
                 Verify Email Address
             </a>
             </p>

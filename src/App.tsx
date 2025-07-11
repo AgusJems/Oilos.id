@@ -38,6 +38,7 @@ import CartPage from "./landing/components/Pemesanan/Cart/page";
 import EmailVerificationNotice from "./components/auth/EmailVerificationNotice";
 import CheckVerificationNotice from "./components/auth/CheckVerificationNotice";
 import VerifySuccess from "./components/auth/VerifySuccess";
+import VerifyEmail from "./components/auth/VerifyEmail";
 
 export default function App() {
    useEffect(() => {
@@ -96,6 +97,7 @@ export default function App() {
           <Route path="/verify-email-notice" element={<EmailVerificationNotice />} />
           <Route path="/check-verify-email-notice" element={<CheckVerificationNotice />} />
           <Route path="/verify-success" element={<VerifySuccess />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
 
           <Route element={<LandingLayout />}>
             <Route path="/landing" element={<LandingPage />} />
