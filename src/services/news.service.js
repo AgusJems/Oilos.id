@@ -36,6 +36,21 @@ const newsService = {
             throw error; // Re-throw the error for the controller to handle
         }
     },
+    
+    updateNews: async (id, updateData) => {
+        try {
+            // Build the SET part of the SQL query dynamically based on updateData
+            const setClauses = Object.keys(updateData).map(key => `${key} = ?`).join(', ');
+            const values = Object.values(updateData);
+            values.push(id); // Add id to the end of values for the WHERE clause
+
+            await pool.query(`UPDATE news SET ${setClauses} WHERE Id = ?`, values);
+            return true; // Indicate success
+        } catch (error) {
+            console.error(`Error updating news with ID ${id}:`, error);
+            throw error;
+        }
+    },
 }
 
 export default newsService;

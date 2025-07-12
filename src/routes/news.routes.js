@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllNews, insertDetailNews} from '../controllers/news.controller.js';
+import {getAllNews, insertDetailNews, updateNews} from '../controllers/news.controller.js';
 const router = express.Router();
 
 
@@ -90,5 +90,41 @@ router.get('/getAllNews', getAllNews);
  *         description: Server error
  */
 router.post('/insertDetailNews', insertDetailNews);
+
+/**
+ * @swagger
+ * /api/updateNews/{id}:
+ *   put:
+ *     summary: Update an existing news article
+ *     tags: [News]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the news article to update.
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: News updated successfully.
+ *       404:
+ *         description: News not found or no changes made.
+ *       500:
+ *         description: Internal server error.
+ */
+router.put('/updateNews/:id', updateNews);
 
 export default router;
