@@ -65,6 +65,7 @@ const swaggerOptions = {
     './src/routes/province.routes.js',
     './src/routes/city.routes.js',
     './src/routes/roles.routes.js',
+    './src/routes/news.routes.js',
   ], // Path to the API routes file(s)
 };
 // Generate Swagger specification
