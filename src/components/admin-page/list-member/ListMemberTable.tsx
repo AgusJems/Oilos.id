@@ -12,28 +12,38 @@ import Button from "../../ui/button/Button";
 import Input from "../../form/input/InputField";
 import Label from "../../form/Label";
 import Badge from "../../ui/badge/Badge";
+import Switch from "../../form/switch/Switch";
 
 interface User {
-  Id: number;
+  id: number;
+  username: string;
+  password?: string;
   name: string;
   identity: string;
   phone: string;
   email: string | null;
   code_referral: string | null;
   status: number;
-  roles_name: string;
-  cities_name: string;
-  provinces_name: string;
+  roles_id?: number;
+  cities_id?: number;
+  roles_name?: string;
+  cities_name?: string;
+  provinces_name?: string;
 }
 
 export default function ListMemberTable() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [ users, setUsers ] = useState<User[]>([]);
   const { isOpen, openModal, closeModal } = useModal();
-  const handleSave = () => {
-    // Handle save logic here
-    console.log("Saving changes...");
-    closeModal();
-  };
+  const [ selectedUser, setSelectedUser ] = useState<User | null>(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    identity: "",
+    phone: "",
+    email: "",
+    codeReferral: "",
+    status: true,
+  });
 
   useEffect(() => {
     fetch("http://localhost:3001/api/getAllUsers")
@@ -43,6 +53,65 @@ export default function ListMemberTable() {
       })
       .catch((err) => console.error("Error fetching users:", err));
   }, []);
+
+  const handleEdit = async (id: number) => {
+    console.log("Edit ID:", id);
+    try {
+      const res = await fetch(`http://localhost:3001/api/members/${id}`);
+      const json = await res.json();
+      setSelectedUser(json.data); 
+      setFormData({
+        name: json.data.name || "",
+        identity: json.data.identity || "",
+        phone: json.data.phone || "",
+        email: json.data.email || "",
+        codeReferral: json.data.code_referral || "",
+        status: json.data.status === 1,
+      });
+
+      openModal();
+    } catch (error) {
+      console.error("Gagal mengambil data member:", error);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!selectedUser) return;
+
+    const payload = {
+      username: selectedUser.name,
+      password: "", // bisa kosong jika tidak ingin diubah
+      name: formData.name,
+      identity: formData.identity,
+      phone: formData.phone,
+      email: formData.email,
+      codeReferral: formData.codeReferral,
+    };
+
+    try {
+      const res = await fetch(`http://localhost:3001/api/members/${selectedUser.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        alert("Berhasil update user.");
+        closeModal();
+        // Reload data user
+        const updatedUsers = users.map((u) =>
+          u.id === selectedUser.id ? { ...u, ...formData, status: formData.status ? 1 : 0 } : u
+        );
+        setUsers(updatedUsers);
+      } else {
+        alert("Gagal update: " + result.message);
+      }
+    } catch (err) {
+      console.error("Update failed:", err);
+      alert("Terjadi kesalahan saat update.");
+    }
+  };
 
   return (
     <>
@@ -89,7 +158,7 @@ export default function ListMemberTable() {
           {/* Table Body */}
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {users.map((user) => (
-              <TableRow key={user.Id}>
+              <TableRow key={user.id}>
                 <TableCell className="px-5 py-4 sm:px-6 text-start">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.name}
@@ -139,7 +208,7 @@ export default function ListMemberTable() {
                   </Badge>
                 </TableCell>
                 <TableCell className="px-5 py-4 sm:px-6 text-start">
-                  <button onClick={openModal} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+                  <button onClick={() => handleEdit(user.id)} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
                     <svg
                       className="fill-current"
                       width="18"
@@ -179,31 +248,68 @@ export default function ListMemberTable() {
               <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                 <div>
                   <Label>Nama</Label>
-                  <Input type="text" placeholder="nama" />
+                  <Input
+                    type="text"
+                    placeholder="nama"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    disabled
+                  />
                 </div>
                 <div>
                   <Label>NIK</Label>
-                  <Input type="text" placeholder="nik" />
+                  <Input
+                    type="text"
+                    placeholder="nik"
+                    value={formData.identity}
+                    onChange={(e) => setFormData({ ...formData, identity: e.target.value })}
+                    disabled
+                  />
                 </div>
                 <div>
                   <Label>Email</Label>
-                  <Input type="text" placeholder="email" />
+                  <Input
+                    type="text"
+                    placeholder="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    disabled
+                  />
                 </div>
                 <div>
                   <Label>No. Handphone</Label>
-                  <Input type="text" placeholder="no hp" />
-                </div>
-                <div>
-                  <Label>Area</Label>
-                  <Input type="text" placeholder="area" />
+                  <Input
+                    type="text"
+                    placeholder="no hp"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    disabled
+                  />
                 </div>
                 <div>
                   <Label>Kode Referal</Label>
-                  <Input type="text" placeholder="kode referal" />
+                  <Input
+                    type="text"
+                    placeholder="referal"
+                    value={formData.codeReferral}
+                    onChange={(e) => setFormData({ ...formData, codeReferral: e.target.value })}
+                    disabled
+                  />
                 </div>
                 <div>
-                  <Label>Role</Label>
-                  <Input type="text" placeholder="role" />
+                  <Label>Status</Label>
+                  <div className="flex items-center gap-3">
+                    <Switch
+                      label="Member"
+                      defaultChecked={formData.status}
+                      onChange={(checked) =>
+                        setFormData({ ...formData, status: checked })
+                      }
+                    />
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                      {formData.status ? "Aktif" : "Non Aktif"}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
