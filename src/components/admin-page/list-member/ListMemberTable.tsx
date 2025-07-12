@@ -13,6 +13,12 @@ import Input from "../../form/input/InputField";
 import Label from "../../form/Label";
 import Badge from "../../ui/badge/Badge";
 import Switch from "../../form/switch/Switch";
+import Select from "react-select";
+
+interface Role {
+  id: number;
+  name: string;
+}
 
 interface User {
   id: number;
@@ -31,8 +37,28 @@ interface User {
   provinces_name?: string;
 }
 
+const customStyles = {
+  control: (base: any, state: any) => ({
+    ...base,
+    backgroundColor: state.isFocused ? "#f0fdf4" : "white",
+    borderColor: state.isFocused ? "#22c55e" : "#e5e7eb",
+    boxShadow: state.isFocused ? "0 0 0 2px rgba(34, 197, 94, 0.3)" : undefined,
+    "&:hover": {
+      borderColor: "#22c55e",
+    },
+    padding: "2px",
+    fontSize: "14px",
+  }),
+  menu: (base: any) => ({
+    ...base,
+    zIndex: 9999,
+    fontSize: "14px",
+  }),
+};
+
 export default function ListMemberTable() {
   const [ users, setUsers ] = useState<User[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
   const { isOpen, openModal, closeModal } = useModal();
   const [ selectedUser, setSelectedUser ] = useState<User | null>(null);
 
@@ -41,34 +67,42 @@ export default function ListMemberTable() {
     identity: "",
     phone: "",
     email: "",
-    codeReferral: "",
+    code_referral: "",
     status: true,
+    rolesId: 0,
   });
 
   useEffect(() => {
     fetch("http://localhost:3001/api/getAllUsers")
       .then((res) => res.json())
       .then((data) => {
-        setUsers(data.data);
+        const limitedUsers = data.data.slice(0, 100);
+        setUsers(limitedUsers);
       })
       .catch((err) => console.error("Error fetching users:", err));
   }, []);
 
+  useEffect(() => {
+    fetch("http://localhost:3001/api/getAllRoles")
+      .then((res) => res.json())
+      .then((data) => setRoles(data.data))
+      .catch((err) => console.error("Error fetching roles:", err));
+  }, []);
+
   const handleEdit = async (id: number) => {
-    console.log("Edit ID:", id);
     try {
       const res = await fetch(`http://localhost:3001/api/members/${id}`);
       const json = await res.json();
-      setSelectedUser(json.data); 
+      setSelectedUser(json.data);
       setFormData({
         name: json.data.name || "",
         identity: json.data.identity || "",
         phone: json.data.phone || "",
         email: json.data.email || "",
-        codeReferral: json.data.code_referral || "",
+        code_referral: json.data.code_referral || "",
         status: json.data.status === 1,
+        rolesId: json.data.roles_id || 0,
       });
-
       openModal();
     } catch (error) {
       console.error("Gagal mengambil data member:", error);
@@ -80,26 +114,30 @@ export default function ListMemberTable() {
 
     const payload = {
       username: selectedUser.name,
-      password: "", // bisa kosong jika tidak ingin diubah
+      password: "",
       name: formData.name,
       identity: formData.identity,
       phone: formData.phone,
       email: formData.email,
-      codeReferral: formData.codeReferral,
+      code_referral: formData.code_referral,
+      roles_id: formData.rolesId,
+      status: formData.status ? 1 : 0,
     };
 
     try {
-      const res = await fetch(`http://localhost:3001/api/members/${selectedUser.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        `http://localhost:3001/api/members/${selectedUser.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const result = await res.json();
       if (res.ok) {
         alert("Berhasil update user.");
         closeModal();
-        // Reload data user
         const updatedUsers = users.map((u) =>
           u.id === selectedUser.id ? { ...u, ...formData, status: formData.status ? 1 : 0 } : u
         );
@@ -113,10 +151,20 @@ export default function ListMemberTable() {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const totalPages = Math.ceil(users.length / itemsPerPage);
+  const paginatedUsers = users.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
+    
     <>
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-      <div className="max-w-full overflow-x-auto">
+      <div className="max-w-full overflow-x-auto p-2">
         <Table>
           {/* Table Header */}
           <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
@@ -157,49 +205,49 @@ export default function ListMemberTable() {
 
           {/* Table Body */}
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-            {users.map((user) => (
+            {paginatedUsers.map((user) => (
               <TableRow key={user.id}>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.identity}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.provinces_name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.cities_name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.roles_name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.phone}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.email}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.code_referral}
                   </span>
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-3 text-gray-500 text-start whitespace-nowrap text-theme-sm dark:text-gray-400">
                   <Badge
                     size="sm"
                     color={user.status === 1 ? "success" : "error"}
@@ -231,6 +279,27 @@ export default function ListMemberTable() {
             ))}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex justify-between items-center px-5 py-4">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Page {currentPage} of {totalPages}
+        </p>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1 text-sm border rounded disabled:opacity-50"
+          >
+            Prev
+          </button>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 text-sm border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
     <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
@@ -291,16 +360,35 @@ export default function ListMemberTable() {
                   <Input
                     type="text"
                     placeholder="referal"
-                    value={formData.codeReferral}
-                    onChange={(e) => setFormData({ ...formData, codeReferral: e.target.value })}
+                    value={formData.code_referral}
+                    onChange={(e) => setFormData({ ...formData, code_referral: e.target.value })}
                     disabled
                   />
                 </div>
                 <div>
-                  <Label>Status</Label>
+                  <Label>Role</Label>
+                  <Select
+                    styles={customStyles}
+                    options={roles.map((role) => ({
+                      value: role.id,
+                      label: role.name,
+                    }))}
+                    value={roles
+                      .map((role) => ({ value: role.id, label: role.name }))
+                      .find((option) => option.value === formData.rolesId)}
+                    onChange={(selectedOption) => {
+                      if (selectedOption) {
+                        setFormData({ ...formData, rolesId: selectedOption.value });
+                      }
+                    }}
+                    placeholder="Pilih Role"
+                  />
+                </div>
+                <div>
+                  <Label>Status Member</Label>
                   <div className="flex items-center gap-3">
                     <Switch
-                      label="Member"
+                      label=""
                       defaultChecked={formData.status}
                       onChange={(checked) =>
                         setFormData({ ...formData, status: checked })
