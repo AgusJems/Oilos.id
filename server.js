@@ -10,6 +10,7 @@ import authenticationRoutes from './src/routes/authentication.routes.js';
 import memberRoutes from './src/routes/member.routes.js';
 import provinceRoutes from './src/routes/province.routes.js';
 import cityRoutes from './src/routes/city.routes.js';
+import rolesService from './src/routes/roles.routes.js';
 
 const envSetting = {
   secretKey: process.env.SECRET_KEY
@@ -34,6 +35,7 @@ app.use('/api', authenticationRoutes);
 app.use('/api', memberRoutes);
 app.use('/api', provinceRoutes);
 app.use('/api', cityRoutes);
+app.use('/api', rolesService);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
