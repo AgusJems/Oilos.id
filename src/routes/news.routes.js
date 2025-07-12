@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllNews, insertDetailNews, updateNews, getActiveNews, deleteNews} from '../controllers/news.controller.js';
+import {getAllNews, insertDetailNews, updateNews, getActiveNews, deleteNews, getNewsById} from '../controllers/news.controller.js';
 const router = express.Router();
 
 
@@ -79,6 +79,67 @@ router.get('/getAllNews', getAllNews);
  *         description: Server error
  */
 router.get('/getActiveNews', getActiveNews);
+
+/**
+ * @openapi
+ * /api/getNewsById/{id}:
+ *   get:
+ *     summary: Get a news article by ID
+ *     description: Retrieve a single news article by its unique ID.
+ *     tags:
+ *       - News
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the news article to retrieve.
+ *         schema:
+ *           type: string
+ *           example: '1a2b3c4d'
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved the news article.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The news article ID.
+ *                   example: '1a2b3c4d'
+ *                 title:
+ *                   type: string
+ *                   description: The title of the news article.
+ *                   example: 'Important Announcement'
+ *                 content:
+ *                   type: string
+ *                   description: The full content of the news article.
+ *                   example: 'Here is the full content of the news...'
+ *       '400':
+ *         description: Invalid ID supplied.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Invalid ID format.'
+ *       '404':
+ *         description: News article not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'News article with id 1a2b3c4d not found.'
+ */
+
+router.get('/getNewsById/:id', getNewsById);
+
 
 /**
  * @swagger
@@ -166,6 +227,6 @@ router.put('/updateNews/:id', updateNews);
  *       500:
  *         description: Internal server error.
  */
-router.put('/deleteNews/:id', deleteNews);
+router.delete('/deleteNews/:id', deleteNews);
 
 export default router;

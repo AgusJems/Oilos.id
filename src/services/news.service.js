@@ -83,6 +83,21 @@ const newsService = {
             throw error; // Re-throw the error for the controller to handle
         }
     },
+
+    getNewsById: async (id) => {
+        if (!pool) {
+            throw new Error("Database pool not initialized in cityService.");
+        }
+
+        try {
+            const query = 'SELECT * FROM news WHERE Id = ?';
+            const [result] = await pool.query(query, [id]);
+            return result;
+        } catch (error) {
+            console.error('Error fetching news:', error);
+            throw error; // Re-throw the error for the controller to handle
+        }
+    },
 }
 
 export default newsService;
