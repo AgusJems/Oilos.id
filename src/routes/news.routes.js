@@ -64,7 +64,7 @@ router.get('/getAllNews', getAllNews);
  * @swagger
  * /api/getActiveNews:
  *   get:
- *     summary: Retrieve a list of all news articles
+ *     summary: Retrieve a list of active news articles
  *     tags: [News]
  *     responses:
  *       200:
