@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllNews, insertDetailNews, updateNews, getActiveNews} from '../controllers/news.controller.js';
+import {getAllNews, insertDetailNews, updateNews, getActiveNews, deleteNews} from '../controllers/news.controller.js';
 const router = express.Router();
 
 
@@ -146,5 +146,26 @@ router.post('/insertDetailNews', insertDetailNews);
  *         description: Internal server error.
  */
 router.put('/updateNews/:id', updateNews);
+
+/**
+ * @swagger
+ * /api/deleteNews/{id}:
+ *   delete:
+ *     summary: Delete a news article
+ *     tags: [News]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the news article to delete.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: News deleted successfully.
+ *       500:
+ *         description: Internal server error.
+ */
+router.put('/deleteNews/:id', deleteNews);
 
 export default router;

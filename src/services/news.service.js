@@ -66,6 +66,23 @@ const newsService = {
             throw error;
         }
     },
+
+    deleteNews: async (id) => {
+        if (!pool) {
+            throw new Error("Database pool not initialized in authenticationService.");
+        }
+
+        try {
+            const query = `
+                DELETE FROM news
+                WHERE Id = ?
+            `;
+            await pool.query(query, [id]);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+            throw error; // Re-throw the error for the controller to handle
+        }
+    },
 }
 
 export default newsService;
