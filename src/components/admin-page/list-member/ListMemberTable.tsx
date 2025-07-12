@@ -280,11 +280,11 @@ export default function ListMemberTable() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex justify-between items-center px-5 py-4">
+      <div className="flex justify-between items-center px-5 py-4 flex-wrap gap-4">
         <p className="text-sm text-gray-600 dark:text-gray-400">
           Page {currentPage} of {totalPages}
         </p>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap items-center gap-1">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
@@ -292,6 +292,21 @@ export default function ListMemberTable() {
           >
             Prev
           </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-3 py-1 text-sm border rounded ${
+                currentPage === page
+                  ? "bg-green-500 text-white"
+                  : "text-gray-700 dark:text-gray-300"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+
           <button
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
