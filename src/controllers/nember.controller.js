@@ -42,7 +42,7 @@ const MemberController = {
             const updateData = req.body;
             const result = await MemberService.updateUser(userId, updateData);
 
-            if (result && result.affectedRows > 0) {
+            if (result) {
                 res.status(200).json({ message: 'User updated successfully' });
             } else {
                 res.status(404).json({ message: 'User not found or no changes made' });
