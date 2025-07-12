@@ -12,6 +12,17 @@ export const getAllNews = async (req, res) => {
   }
 };
 
+export const getActiveNews = async (req, res) => {
+  try {
+    // Get a connection from the pool and execute a query
+    const [rows] = await newsService.getActiveNews();
+    res.status(200).json({data: rows});
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    res.status(500).json({ message: 'An error occurred while fetching news.' });
+  }
+};
+
 export const insertDetailNews = async (req, res) => {
   const { title, description, image } = req.body;
 

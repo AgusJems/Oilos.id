@@ -15,6 +15,21 @@ const newsService = {
             throw error; // Re-throw the error for the controller to handle
         }
     },
+
+    getActiveNews: async () => {
+        if (!pool) {
+            throw new Error("Database pool not initialized in newsService.");
+        }
+
+        try {
+            const query = 'SELECT * FROM news WHERE status = 1';
+            const result = await pool.query(query);
+            return result;
+        } catch (error) {
+            console.error('Error fetching news:', error);
+            throw error; // Re-throw the error for the controller to handle
+        }
+    },
     
     insertDetailNews: async (title, description, image) => {
         if (!pool) {
@@ -36,7 +51,7 @@ const newsService = {
             throw error; // Re-throw the error for the controller to handle
         }
     },
-    
+
     updateNews: async (id, updateData) => {
         try {
             // Build the SET part of the SQL query dynamically based on updateData

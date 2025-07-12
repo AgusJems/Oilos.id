@@ -62,6 +62,26 @@ router.get('/getAllNews', getAllNews);
 
 /**
  * @swagger
+ * /api/getActiveNews:
+ *   get:
+ *     summary: Retrieve a list of all news articles
+ *     tags: [News]
+ *     responses:
+ *       200:
+ *         description: A list of news articles.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/News'
+ *       500:
+ *         description: Server error
+ */
+router.get('/getActiveNews', getActiveNews);
+
+/**
+ * @swagger
  * /api/insertDetailNews:
  *   post:
  *     summary: Create a new news article
