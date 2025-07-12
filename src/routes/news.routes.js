@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllNews} from '../controllers/news.controller.js';
+import {getAllNews, insertDetailNews} from '../controllers/news.controller.js';
 const router = express.Router();
 
 
@@ -59,5 +59,36 @@ const router = express.Router();
  *         description: Server error
  */
 router.get('/getAllNews', getAllNews);
+
+/**
+ * @swagger
+ * /api/insertDetailNews:
+ *   post:
+ *     summary: Create a new news article
+ *     tags: [News]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *             required:
+ *               - title
+ *               - description
+ *               - image
+ *     responses:
+ *       201:
+ *         description: News created successfully.
+ *       500:
+ *         description: Server error
+ */
+router.post('/insertDetailNews', insertDetailNews);
 
 export default router;

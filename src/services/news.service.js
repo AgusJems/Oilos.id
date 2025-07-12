@@ -15,6 +15,27 @@ const newsService = {
             throw error; // Re-throw the error for the controller to handle
         }
     },
+    
+    insertDetailNews: async (title, description, image) => {
+        if (!pool) {
+            throw new Error("Database pool not initialized in authenticationService.");
+        }
+
+        try {
+            const query = `
+                INSERT INTO news
+                (title, description, image, created_by)
+                VALUES
+                (?,?,?,?)
+            `;
+            await pool.query(query, 
+                [title, description, image, 'Developer'] // Assuming 'Developer' is the creator
+            );
+        } catch (error) {
+            console.error('Error fetching users:', error);
+            throw error; // Re-throw the error for the controller to handle
+        }
+    },
 }
 
 export default newsService;
