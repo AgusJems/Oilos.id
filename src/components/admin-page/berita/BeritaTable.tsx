@@ -12,7 +12,7 @@ import { Modal } from "../../ui/modal";
 import Input from "../../form/input/InputField";
 import Label from "../../form/Label";
 import FileInput from "../../form/input/FileInput";
-import TiptapEditor from "../../form/input/TiptapEditor";
+import QuillEditor from "../../form/input/QuillEditor";
 
 interface NewsItem {
   id: number;
@@ -106,7 +106,10 @@ export default function BeritaTable() {
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">{news.title}</span>
                 </TableCell>
                 <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {news.description}
+                  <div
+                    className="prose prose-sm max-w-none dark:prose-invert"
+                    dangerouslySetInnerHTML={{ __html: news.description }}
+                  />
                 </TableCell>
                 <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                   {new Date(news.created_at).toLocaleDateString()}
@@ -195,7 +198,13 @@ export default function BeritaTable() {
         </div>
         <div className="mb-3">
           <Label>Deskripsi</Label>
-          <TiptapEditor></TiptapEditor>
+          <QuillEditor
+            value={formData.description}
+            onChange={(content) =>
+              setFormData({ ...formData, description: content })
+            }
+            placeholder="Tulis deskripsi berita di sini..."
+          />
         </div>
         <div className="mb-3">
           <Label>Upload Gambar</Label>
