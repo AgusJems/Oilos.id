@@ -318,115 +318,115 @@ export default function ListMemberTable() {
       </div>
     </div>
     <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
-        <div className="relative w-full p-4 overflow-y-auto bg-white no-scrollbar rounded-3xl dark:bg-gray-900 lg:p-11">
-          <div className="px-2 pr-14">
-            <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-              Edit Member
-            </h4>
-            <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-              Update your details to keep your member up-to-date.
-            </p>
-          </div>
-          <form className="flex flex-col">
-            <div className="px-2 overflow-y-auto custom-scrollbar">
-              <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                <div>
-                  <Label>Nama</Label>
-                  <Input
-                    type="text"
-                    placeholder="nama"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    disabled
+      <div className="relative w-full p-4 overflow-y-auto bg-white no-scrollbar rounded-3xl dark:bg-gray-900 lg:p-11">
+        <div className="px-2 pr-14">
+          <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
+            Edit Member
+          </h4>
+          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
+            Update your details to keep your member up-to-date.
+          </p>
+        </div>
+        <form className="flex flex-col">
+          <div className="px-2 overflow-y-auto custom-scrollbar">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+              <div>
+                <Label>Nama</Label>
+                <Input
+                  type="text"
+                  placeholder="nama"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  disabled
+                />
+              </div>
+              <div>
+                <Label>NIK</Label>
+                <Input
+                  type="text"
+                  placeholder="nik"
+                  value={formData.identity}
+                  onChange={(e) => setFormData({ ...formData, identity: e.target.value })}
+                  disabled
+                />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input
+                  type="text"
+                  placeholder="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  disabled
+                />
+              </div>
+              <div>
+                <Label>No. Handphone</Label>
+                <Input
+                  type="text"
+                  placeholder="no hp"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  disabled
+                />
+              </div>
+              <div>
+                <Label>Kode Referal</Label>
+                <Input
+                  type="text"
+                  placeholder="referal"
+                  value={formData.code_referral}
+                  onChange={(e) => setFormData({ ...formData, code_referral: e.target.value })}
+                  disabled
+                />
+              </div>
+              <div>
+                <Label>Role</Label>
+                <Select
+                  styles={customStyles}
+                  options={roles.map((role) => ({
+                    value: role.id,
+                    label: role.name,
+                  }))}
+                  value={roles
+                    .map((role) => ({ value: role.id, label: role.name }))
+                    .find((option) => option.value === formData.rolesId)}
+                  onChange={(selectedOption) => {
+                    if (selectedOption) {
+                      setFormData({ ...formData, rolesId: selectedOption.value });
+                    }
+                  }}
+                  placeholder="Pilih Role"
+                />
+              </div>
+              <div>
+                <Label>Status Member</Label>
+                <div className="flex items-center gap-3">
+                  <Switch
+                    label=""
+                    defaultChecked={formData.status}
+                    onChange={(checked) =>
+                      setFormData({ ...formData, status: checked })
+                    }
                   />
-                </div>
-                <div>
-                  <Label>NIK</Label>
-                  <Input
-                    type="text"
-                    placeholder="nik"
-                    value={formData.identity}
-                    onChange={(e) => setFormData({ ...formData, identity: e.target.value })}
-                    disabled
-                  />
-                </div>
-                <div>
-                  <Label>Email</Label>
-                  <Input
-                    type="text"
-                    placeholder="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    disabled
-                  />
-                </div>
-                <div>
-                  <Label>No. Handphone</Label>
-                  <Input
-                    type="text"
-                    placeholder="no hp"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    disabled
-                  />
-                </div>
-                <div>
-                  <Label>Kode Referal</Label>
-                  <Input
-                    type="text"
-                    placeholder="referal"
-                    value={formData.code_referral}
-                    onChange={(e) => setFormData({ ...formData, code_referral: e.target.value })}
-                    disabled
-                  />
-                </div>
-                <div>
-                  <Label>Role</Label>
-                  <Select
-                    styles={customStyles}
-                    options={roles.map((role) => ({
-                      value: role.id,
-                      label: role.name,
-                    }))}
-                    value={roles
-                      .map((role) => ({ value: role.id, label: role.name }))
-                      .find((option) => option.value === formData.rolesId)}
-                    onChange={(selectedOption) => {
-                      if (selectedOption) {
-                        setFormData({ ...formData, rolesId: selectedOption.value });
-                      }
-                    }}
-                    placeholder="Pilih Role"
-                  />
-                </div>
-                <div>
-                  <Label>Status Member</Label>
-                  <div className="flex items-center gap-3">
-                    <Switch
-                      label=""
-                      defaultChecked={formData.status}
-                      onChange={(checked) =>
-                        setFormData({ ...formData, status: checked })
-                      }
-                    />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
-                      {formData.status ? "Aktif" : "Non Aktif"}
-                    </span>
-                  </div>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">
+                    {formData.status ? "Aktif" : "Non Aktif"}
+                  </span>
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-              <Button size="sm" variant="outline" onClick={closeModal}>
-                Close
-              </Button>
-              <Button size="sm" onClick={handleSave}>
-                Save Changes
-              </Button>
-            </div>
-          </form>
-        </div>
-      </Modal>
+          </div>
+          <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
+            <Button size="sm" variant="outline" onClick={closeModal}>
+              Close
+            </Button>
+            <Button size="sm" onClick={handleSave}>
+              Save Changes
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Modal>
     </>
   );
 }
