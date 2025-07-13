@@ -12,6 +12,7 @@ import { Modal } from "../../ui/modal";
 import Input from "../../form/input/InputField";
 import Label from "../../form/Label";
 import FileInput from "../../form/input/FileInput";
+import TiptapEditor from "../../form/input/TiptapEditor";
 
 interface NewsItem {
   id: number;
@@ -194,12 +195,7 @@ export default function BeritaTable() {
         </div>
         <div className="mb-3">
           <Label>Deskripsi</Label>
-          <Input
-            type="text"
-            placeholder="Deskripsi"
-            value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          />
+          <TiptapEditor></TiptapEditor>
         </div>
         <div className="mb-3">
           <Label>Upload Gambar</Label>
