@@ -14,6 +14,14 @@ import Label from "../../form/Label";
 import FileInput from "../../form/input/FileInput";
 import QuillEditor from "../../form/input/QuillEditor";
 import Switch from "../../form/switch/Switch";
+import {
+  showSuccess,
+  showError,
+  showConfirm,
+  showLoading,
+  closeSwal,
+} from "../../../utils/swalFire"; // ← sesuaikan path jika perlu
+
 
 interface NewsItem {
   id: number;
@@ -58,21 +66,25 @@ export default function BeritaTable() {
 
   const handleAddNews = async () => {
     try {
+      showLoading("Menyimpan berita...");
       const res = await fetch("http://localhost:3001/api/insertDetailNews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      closeSwal();
 
       if (res.ok) {
+        showSuccess("Berhasil", "Berita berhasil ditambahkan.");
         setFormData({ title: "", description: "", image: "", status: true });
         setIsOpen(false);
-        fetchNews(); // refetch data
+        fetchNews();
       } else {
-        console.error("Gagal menambahkan berita");
+        showError("Gagal", "Gagal menambahkan berita.");
       }
     } catch (error) {
-      console.error("Error saat menambahkan:", error);
+      closeSwal();
+      showError("Error", "Terjadi kesalahan saat menambahkan berita.");
     }
   };
 
@@ -89,22 +101,26 @@ export default function BeritaTable() {
 
   const handleUpdateNews = async () => {
     try {
+      showLoading("Mengupdate berita...");
       const res = await fetch(`http://localhost:3001/api/updateNews/${editingId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      closeSwal();
 
       if (res.ok) {
+        showSuccess("Berhasil", "Berita berhasil diperbarui.");
         setFormData({ title: "", description: "", image: "", status: true });
         setIsOpen(false);
         setEditingId(null);
-        fetchNews(); // refresh data
+        fetchNews();
       } else {
-        console.error("Gagal mengupdate berita");
+        showError("Gagal", "Gagal mengupdate berita.");
       }
     } catch (error) {
-      console.error("Error saat update:", error);
+      closeSwal();
+      showError("Error", "Terjadi kesalahan saat update berita.");
     }
   };
 
@@ -117,23 +133,33 @@ export default function BeritaTable() {
   };
 
   const handleDeleteNews = async (id: number) => {
-  const confirmDelete = confirm("Apakah kamu yakin ingin menghapus berita ini?");
+  const confirmDelete = await showConfirm(
+    "Yakin ingin menghapus?",
+    "Berita yang dihapus tidak bisa dikembalikan!",
+    "Hapus",
+    "Batal"
+  );
     if (!confirmDelete) return;
 
     try {
+      showLoading("Menghapus...");
       const res = await fetch(`http://localhost:3001/api/deleteNews/${id}`, {
         method: "DELETE",
       });
+      closeSwal();
 
       if (res.ok) {
-        fetchNews(); // Refresh data setelah delete
+        showSuccess("Berhasil", "Berita berhasil dihapus.");
+        fetchNews();
       } else {
-        console.error("Gagal menghapus berita");
+        showError("Gagal", "Gagal menghapus berita.");
       }
     } catch (error) {
-      console.error("Error saat menghapus:", error);
+      closeSwal();
+      showError("Error", "Terjadi kesalahan saat menghapus berita.");
     }
   };
+
 
   const totalPages = Math.ceil(newsData.length / itemsPerPage);
   const paginatedNews = newsData.slice(

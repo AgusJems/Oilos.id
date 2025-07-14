@@ -776,3 +776,26 @@ span.flatpickr-weekday,
 .simplebar-scrollbar.simplebar-visible:before {
   @apply opacity-100;
 }
+
+/* Efek blur seluruh layar */
+.swal2-blur-container {
+  backdrop-filter: blur(12px);
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  z-index: 99999;
+}
+
+/* Popup kembali ke ukuran normal */
+.swal2-blur-popup {
+  max-width: 32rem !important; /* sekitar 512px (ukuran default SweetAlert2) */
+  border-radius: 1rem !important;
+  padding: 1.5rem !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #1f2937 !important; /* Tailwind gray-800 */
+}
+
+/* Mode gelap */
+.dark .swal2-blur-popup {
+  background: rgba(17, 24, 39, 0.95) !important; /* Tailwind gray-900 */
+  color: #f9fafb !important; /* Tailwind gray-50 */
+}
+
