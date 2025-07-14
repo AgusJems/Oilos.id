@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoArrowBack } from 'react-icons/io5';
 import { fetchNewsById, NewsItem } from '../data';
+import 'quill/dist/quill.core.css';
 import DOMPurify from 'dompurify';
 
 const BeritaDetail: React.FC = () => {
@@ -11,10 +12,9 @@ const BeritaDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   const cleanAndSanitize = (html: string) => {
-    const cleanedHtml = html.replace(/<span class="ql-ui"[^>]*>.*?<\/span>/g, '');
-    return DOMPurify.sanitize(cleanedHtml, {
-      ALLOWED_TAGS: ['p', 'strong', 'em', 'ul', 'ol', 'li', 'br', 'h1', 'h2', 'h3', 'a', 'img'],
-      ALLOWED_ATTR: ['href', 'src', 'alt', 'title'],
+    return DOMPurify.sanitize(html, {
+      ALLOWED_TAGS: ['p', 'strong', 'em', 'ul', 'ol', 'li', 'br', 'h1', 'h2', 'h3', 'a', 'img', 'span'],
+      ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'type', 'data-list'],
     });
   };
 
@@ -54,8 +54,10 @@ const BeritaDetail: React.FC = () => {
               className="object-cover w-full h-[500px] rounded-lg"
             />
           </div>
-          <div className="prose prose-sm max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: cleanAndSanitize(berita.description) }}>
-          </div>
+          <div
+            className="ql-editor"
+            dangerouslySetInnerHTML={{ __html: cleanAndSanitize(berita.description) }}
+          />
         </div>
       </div>
     </div>
