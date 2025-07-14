@@ -1,35 +1,37 @@
-interface NewsItem {
+export interface NewsItem {
   id: number;
-  img: string;
-  name: string;
-  text: string;
+  title: string;
+  description: string;
+  image: string;
 }
 
-const NewsData: NewsItem[] = [
-  {
-    id: 1,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 1",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-  {
-    id: 2,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 2",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-  {
-    id: 3,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 3",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-  {
-    id: 4,
-    img: "/images/cards/card-04.jpg",
-    name: "Berita 4",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque...",
-  },
-];
+export const fetchActiveNews = async (): Promise<NewsItem[]> => {
+  try {
+    const res = await fetch("http://localhost:3001/api/getActiveNews");
+    const result = await res.json();
 
-export { NewsData };
+    if (!res.ok) {
+      throw new Error(result.message || "Gagal mengambil data berita");
+    }
+
+    return result.data;
+  } catch (err) {
+    console.error("Error fetching active news:", err);
+    return [];
+  }
+};
+
+export const fetchNewsById = async (id: number): Promise<NewsItem | null> => {
+  try {
+    const res = await fetch(`http://localhost:3001/api/getNewsById/${id}`);
+    const result = await res.json();
+
+    if (!res.ok) throw new Error(result.message || "Gagal mengambil detail berita");
+
+    return result.data;
+  } catch (err) {
+    console.error("Error fetching detail news:", err);
+    return null;
+  }
+};
+
