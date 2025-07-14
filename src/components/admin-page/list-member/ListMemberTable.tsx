@@ -61,6 +61,8 @@ export default function ListMemberTable() {
   const [roles, setRoles] = useState<Role[]>([]);
   const { isOpen, openModal, closeModal } = useModal();
   const [ selectedUser, setSelectedUser ] = useState<User | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -151,9 +153,6 @@ export default function ListMemberTable() {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
   const totalPages = Math.ceil(users.length / itemsPerPage);
   const paginatedUsers = users.slice(
     (currentPage - 1) * itemsPerPage,
@@ -207,55 +206,55 @@ export default function ListMemberTable() {
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {paginatedUsers.map((user) => (
               <TableRow key={user.id}>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.identity}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.provinces_name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.cities_name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.roles_name}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.phone}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.email}
                   </span>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start whitespace-nowrap">
+                <TableCell className="px-4 py-4 sm:px-6 text-start whitespace-nowrap">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
                     {user.code_referral}
                   </span>
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-start whitespace-nowrap text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-4 text-gray-500 text-start whitespace-nowrap text-theme-sm dark:text-gray-400">
                   <Badge
                     size="sm"
                     color={user.status === 1 ? "success" : "error"}
                   >
-                    {user.status === 1 ? "Aktif" : "Non Aktif"}
+                    {user.status === 1 ? "Active" : "Non Active"}
                   </Badge>
                 </TableCell>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-4 py-4 sm:px-6 text-start">
                   <button onClick={() => handleEdit(user.id)} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
                     <svg
                       className="fill-current"
@@ -410,7 +409,7 @@ export default function ListMemberTable() {
                     }
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {formData.status ? "Aktif" : "Non Aktif"}
+                    {formData.status ? "Active" : "Non Active"}
                   </span>
                 </div>
               </div>

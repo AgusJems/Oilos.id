@@ -13,6 +13,7 @@ import Input from "../../form/input/InputField";
 import Label from "../../form/Label";
 import FileInput from "../../form/input/FileInput";
 import QuillEditor from "../../form/input/QuillEditor";
+import Switch from "../../form/switch/Switch";
 
 interface NewsItem {
   id: number;
@@ -27,18 +28,21 @@ interface NewsItem {
 export default function BeritaTable() {
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [isOpen, setIsOpen] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     image: "",
+    status: true,
   });
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => {
     setIsOpen(false);
-    setFormData({ title: "", description: "", image: "" });
+    setFormData({ title: "", description: "", image: "", status: true });
+    setEditingId(null);
   };
 
   useEffect(() => {
@@ -61,7 +65,7 @@ export default function BeritaTable() {
       });
 
       if (res.ok) {
-        setFormData({ title: "", description: "", image: "" });
+        setFormData({ title: "", description: "", image: "", status: true });
         setIsOpen(false);
         fetchNews(); // refetch data
       } else {
@@ -69,6 +73,65 @@ export default function BeritaTable() {
       }
     } catch (error) {
       console.error("Error saat menambahkan:", error);
+    }
+  };
+
+  const handleEditNews = (news: NewsItem) => {
+    setFormData({
+      title: news.title,
+      description: news.description,
+      image: news.image,
+      status: news.status === 1
+    });
+    setEditingId(news.id);
+    setIsOpen(true);
+  };
+
+  const handleUpdateNews = async () => {
+    try {
+      const res = await fetch(`http://localhost:3001/api/updateNews/${editingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setFormData({ title: "", description: "", image: "", status: true });
+        setIsOpen(false);
+        setEditingId(null);
+        fetchNews(); // refresh data
+      } else {
+        console.error("Gagal mengupdate berita");
+      }
+    } catch (error) {
+      console.error("Error saat update:", error);
+    }
+  };
+
+  const handleSubmitNews = () => {
+    if (editingId) {
+      handleUpdateNews();
+    } else {
+      handleAddNews();
+    }
+  };
+
+  const handleDeleteNews = async (id: number) => {
+  const confirmDelete = confirm("Apakah kamu yakin ingin menghapus berita ini?");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`http://localhost:3001/api/deleteNews/${id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        fetchNews(); // Refresh data setelah delete
+      } else {
+        console.error("Gagal menghapus berita");
+      }
+    } catch (error) {
+      console.error("Error saat menghapus:", error);
     }
   };
 
@@ -82,47 +145,47 @@ export default function BeritaTable() {
     <>
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
-        <Button
-          onClick={openModal}
-          className="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-        >
-          + Tambah Berita
-        </Button>
+        <div className="p-4 text-end">
+          <Button onClick={openModal} className="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+            + Tambah Berita
+          </Button>
+        </div>
         <Table>
           <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
             <TableRow>
-              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Judul</TableCell>
-              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Deskripsi</TableCell>
-              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Tanggal</TableCell>
-              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Status</TableCell>
-              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Gambar</TableCell>
+              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-center text-theme-xs dark:text-gray-400">Judul</TableCell>
+              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-center text-theme-xs dark:text-gray-400">Deskripsi</TableCell>
+              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-center text-theme-xs dark:text-gray-400">Tanggal</TableCell>
+              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-center text-theme-xs dark:text-gray-400">Status</TableCell>
+              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-center text-theme-xs dark:text-gray-400">Gambar</TableCell>
+              <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-center text-theme-xs dark:text-gray-400">Action</TableCell>
             </TableRow>
           </TableHeader>
 
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {paginatedNews.map((news) => (
               <TableRow key={news.id}>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
+                <TableCell className="px-4 py-4 sm:px-6 text-start">
                   <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">{news.title}</span>
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-4 sm:px-6 text-gray-500 text-theme-sm dark:text-gray-400">
                   <div
                     className="prose prose-sm max-w-none dark:prose-invert"
                     dangerouslySetInnerHTML={{ __html: news.description }}
                   />
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-4 sm:px-6 text-gray-500 text-theme-sm dark:text-gray-400 text-center">
                   {new Date(news.created_at).toLocaleDateString()}
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-4 sm:px-6 text-gray-500 text-center text-theme-sm dark:text-gray-400">
                   <Badge
                     size="sm"
                     color={news.status === 1 ? "success" : "error"}
                   >
-                    {news.status === 1 ? "Active" : "Inactive"}
+                    {news.status === 1 ? "Active" : "Non Active"}
                   </Badge>
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-4 sm:px-6 text-gray-500 text-theme-sm dark:text-gray-400 text-center">
                   {news.image && news.image !== "string" ? (
                     <img
                       src={news.image}
@@ -132,6 +195,46 @@ export default function BeritaTable() {
                   ) : (
                     <span className="text-xs text-gray-400 italic">No Image</span>
                   )}
+                </TableCell>
+                <TableCell className="px-4 py-4 sm:px-6">
+                  <div className="flex justify-center gap-2">
+                    <button onClick={() => handleEditNews(news)} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+                    <svg
+                      className="fill-current"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M15.0911 2.78206C14.2125 1.90338 12.7878 1.90338 11.9092 2.78206L4.57524 10.116C4.26682 10.4244 4.0547 10.8158 3.96468 11.2426L3.31231 14.3352C3.25997 14.5833 3.33653 14.841 3.51583 15.0203C3.69512 15.1996 3.95286 15.2761 4.20096 15.2238L7.29355 14.5714C7.72031 14.4814 8.11172 14.2693 8.42013 13.9609L15.7541 6.62695C16.6327 5.74827 16.6327 4.32365 15.7541 3.44497L15.0911 2.78206ZM12.9698 3.84272C13.2627 3.54982 13.7376 3.54982 14.0305 3.84272L14.6934 4.50563C14.9863 4.79852 14.9863 5.2734 14.6934 5.56629L14.044 6.21573L12.3204 4.49215L12.9698 3.84272ZM11.2597 5.55281L5.6359 11.1766C5.53309 11.2794 5.46238 11.4099 5.43238 11.5522L5.01758 13.5185L6.98394 13.1037C7.1262 13.0737 7.25666 13.003 7.35947 12.9002L12.9833 7.27639L11.2597 5.55281Z"
+                        fill=""
+                      />
+                    </svg>
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteNews(news.id)} className="flex w-full items-center justify-center gap-2 rounded-full border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 shadow-theme-xs hover:bg-red-500 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+                    <svg
+                        className="fill-current"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M6.5 2h5a.5.5 0 01.5.5V4h4a.5.5 0 010 1h-1.086l-.379 9.035a2 2 0 01-1.995 1.965H5.96a2 2 0 01-1.995-1.965L3.586 5H2.5a.5.5 0 010-1h4V2.5a.5.5 0 01.5-.5zm1 .5v1h3v-1h-3zm-3 2l.379 9.035a1 1 0 00.998.965h7.08a1 1 0 00.998-.965L13.5 4.5h-9z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    Delete
+                  </button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -221,13 +324,30 @@ export default function BeritaTable() {
                 />
               )}
         </div>
+        {editingId && (
+          <div className="mb-3">
+            <Label>Status</Label>
+            <div className="flex items-center gap-3">
+              <Switch
+                label=""
+                defaultChecked = {formData.status}
+                onChange={(checked) =>
+                  setFormData({ ...formData, status: checked })
+                }
+              />
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {formData.status ? "Aktif" : "Non Aktif"}
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
           <Button size="sm" variant="outline" onClick={closeModal}>
             Batal
           </Button>
-          <Button size="sm" onClick={handleAddNews}>
-            Simpan
+          <Button size="sm" onClick={handleSubmitNews}>
+              {editingId ? "Update" : "Simpan"}
           </Button>
         </div>
       </div>
