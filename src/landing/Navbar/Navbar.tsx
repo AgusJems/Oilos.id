@@ -5,6 +5,7 @@ import ResponsiveMenu from "./ResponsiveMenu";
 import { NavLinks } from "../Navbar/NavLinks";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { showLogoutSuccess } from "../../utils/swalFire";
 
 interface DecodedUser {
   name?: string;
@@ -62,6 +63,7 @@ const Navbar: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    showLogoutSuccess();
     window.location.href = "/landing";
   };
 

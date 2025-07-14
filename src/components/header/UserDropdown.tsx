@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { decodeToken, DecodedUser } from "../../utils/jwt";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
+import { showLogoutSuccess } from "../../utils/swalFire";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,7 @@ export default function UserDropdown() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    showLogoutSuccess();
     window.location.href = "/signin";
   };
 

@@ -90,3 +90,40 @@ export const showLoading = (title = "Loading...") => {
 export const closeSwal = () => {
   Swal.close();
 };
+
+// Login berhasil
+export const showLoginSuccess = (username?: string) => {
+  Swal.fire({
+    icon: "success",
+    title: "Login Berhasil",
+    text: username ? `Selamat datang, ${username}!` : "Selamat datang!",
+    timer: 2000,
+    showConfirmButton: false,
+    ...blurOptions,
+  });
+};
+
+// Login gagal
+export const showLoginError = (message = "Username atau password salah.") => {
+  Swal.fire({
+    icon: "error",
+    title: "Login Gagal",
+    text: message,
+    confirmButtonColor: "#dc2626",
+    ...blurOptions,
+  });
+};
+
+// Logout berhasil
+export const showLogoutSuccess = () => {
+  Swal.fire({
+    icon: "success",
+    title: "Logout Berhasil",
+    text: "Sampai jumpa kembali!",
+    timer: 1800,
+    showConfirmButton: false,
+    ...blurOptions,
+  });
+};
+
+

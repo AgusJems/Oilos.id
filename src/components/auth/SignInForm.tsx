@@ -7,6 +7,8 @@ import Button from "../ui/button/Button";
 import { appSetting } from "../../../appSetting";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { showLoginSuccess, showLoginError } from "../../utils/swalFire"; // sesuaikan path-nya
+
 
 interface DecodedUser {
   username: string,
@@ -29,49 +31,53 @@ export default function SignInForm() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-      const res = await fetch(`${appSetting.apiUrl}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+  try {
+    const res = await fetch(`${appSetting.apiUrl}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        navigate("/check-verify-email-notice");
-      } else {
-        alert(data.message || "Login gagal");
-      }
+    if (!res.ok) {
+    showLoginError(data.message);
+    return;
+  }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.data));
+    // Simpan token dan data user
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.data));
 
-      const decoded: DecodedUser = jwtDecode(data.token);
-      console.log("JWT Decoded:", decoded);
+    const decoded: DecodedUser = jwtDecode(data.token);
+    console.log("JWT Decoded:", decoded);
 
-      switch (decoded.roles_code) {
-        case "A-0":
-          navigate("/dashboard");
-          break;
-        case "M-1":
-        case "M-2":
-        case "M-3":
-          navigate("/landing");
-          break;
-        default:
-          alert("Role tidak dikenali. Hubungi admin.");
-          break;
-      }
+    // Tampilkan notifikasi sukses
+    showLoginSuccess(decoded.name);
 
-    } catch (err) {
-      console.error("Login error:", err);
-      navigate("/check-verify-email-notice");
+    // Arahkan user berdasarkan role
+    switch (decoded.roles_code) {
+      case "A-0":
+        navigate("/dashboard");
+        break;
+      case "M-1":
+      case "M-2":
+      case "M-3":
+        navigate("/landing");
+        break;
+      default:
+        alert("Role tidak dikenali. Hubungi admin.");
+        break;
     }
-  };
+  } catch (err) {
+    console.error("Login error:", err);
+    navigate("/check-verify-email-notice");
+  }
+};
+
 
   return (
     <div className="flex flex-col flex-1">
@@ -86,7 +92,7 @@ export default function SignInForm() {
             </p>
           </div>
           <div>
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="space-y-6">
                 <div>
                   <Label>
@@ -122,7 +128,7 @@ export default function SignInForm() {
                   </div>
                 </div>
                 <div>
-                  <Button className="w-full bg-green-500 shadow-theme-xs hover:bg-green-600" size="sm">
+                  <Button onClick={handleSubmit} type="button" className="w-full bg-green-500 shadow-theme-xs hover:bg-green-600" size="sm">
                     Sign in
                   </Button>
                 </div>
