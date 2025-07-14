@@ -9,7 +9,7 @@ const blurOptions = {
   backdrop: false, // agar blur dari container terlihat
 };
 
-// ✅ Success
+// Success
 export const showSuccess = (title: string, text?: string) => {
   Swal.fire({
     icon: "success",
@@ -20,7 +20,7 @@ export const showSuccess = (title: string, text?: string) => {
   });
 };
 
-// ❌ Error
+// Error
 export const showError = (title: string, text?: string) => {
   Swal.fire({
     icon: "error",
@@ -31,8 +31,8 @@ export const showError = (title: string, text?: string) => {
   });
 };
 
-// ⚠️ Confirm
-export const showConfirm = async (
+// Confirm
+export const showConfirmDelete = async (
   title: string,
   text?: string,
   confirmText = "Ya",
@@ -53,7 +53,28 @@ export const showConfirm = async (
   return result.isConfirmed;
 };
 
-// ⏳ Loading
+export const showConfirmUpdate = async (
+  title: string,
+  text?: string,
+  confirmText = "Ya",
+  cancelText = "Batal"
+): Promise<boolean> => {
+  const result = await Swal.fire({
+    title,
+    text,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#16a34a",
+    cancelButtonColor: "#ef4444",
+    confirmButtonText: confirmText,
+    cancelButtonText: cancelText,
+    ...blurOptions,
+  });
+
+  return result.isConfirmed;
+};
+
+// Loading
 export const showLoading = (title = "Loading...") => {
   Swal.fire({
     title,
@@ -65,7 +86,7 @@ export const showLoading = (title = "Loading...") => {
   });
 };
 
-// ❎ Close Swal
+// Close Swal
 export const closeSwal = () => {
   Swal.close();
 };

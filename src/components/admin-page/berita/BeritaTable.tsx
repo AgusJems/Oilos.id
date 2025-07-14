@@ -17,7 +17,7 @@ import Switch from "../../form/switch/Switch";
 import {
   showSuccess,
   showError,
-  showConfirm,
+  showConfirmDelete,
   showLoading,
   closeSwal,
 } from "../../../utils/swalFire"; // ← sesuaikan path jika perlu
@@ -133,7 +133,7 @@ export default function BeritaTable() {
   };
 
   const handleDeleteNews = async (id: number) => {
-  const confirmDelete = await showConfirm(
+  const confirmDelete = await showConfirmDelete(
     "Yakin ingin menghapus?",
     "Berita yang dihapus tidak bisa dikembalikan!",
     "Hapus",

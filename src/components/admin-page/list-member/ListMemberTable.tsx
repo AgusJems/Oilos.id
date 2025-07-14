@@ -14,6 +14,14 @@ import Label from "../../form/Label";
 import Badge from "../../ui/badge/Badge";
 import Switch from "../../form/switch/Switch";
 import Select from "react-select";
+import {
+  showSuccess,
+  showError,
+  showConfirmUpdate,
+  showLoading,
+  closeSwal,
+} from "../../../utils/swalFire";
+
 
 interface Role {
   id: number;
@@ -127,6 +135,16 @@ export default function ListMemberTable() {
     };
 
     try {
+      const confirmed = await showConfirmUpdate(
+        "Konfirmasi",
+        "Yakin ingin menyimpan perubahan ini?",
+        "Simpan",
+        "Batal"
+      );
+      if (!confirmed) return;
+
+      showLoading("Menyimpan perubahan...");
+
       const res = await fetch(
         `http://localhost:3001/api/members/${selectedUser.id}`,
         {
@@ -137,19 +155,22 @@ export default function ListMemberTable() {
       );
 
       const result = await res.json();
+      closeSwal(); // tutup loading
+
       if (res.ok) {
-        alert("Berhasil update user.");
+        showSuccess("Berhasil", "Data user berhasil diperbarui.");
         closeModal();
         const updatedUsers = users.map((u) =>
           u.id === selectedUser.id ? { ...u, ...formData, status: formData.status ? 1 : 0 } : u
         );
         setUsers(updatedUsers);
       } else {
-        alert("Gagal update: " + result.message);
+        showError("Gagal", result.message || "Gagal memperbarui data user.");
       }
     } catch (err) {
       console.error("Update failed:", err);
-      alert("Terjadi kesalahan saat update.");
+      closeSwal(); // pastikan loading ditutup
+      showError("Error", "Terjadi kesalahan saat mengupdate data.");
     }
   };
 
@@ -416,10 +437,10 @@ export default function ListMemberTable() {
             </div>
           </div>
           <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-            <Button size="sm" variant="outline" onClick={closeModal}>
+            <Button type="button" size="sm" variant="outline" onClick={closeModal}>
               Close
             </Button>
-            <Button size="sm" onClick={handleSave}>
+            <Button type="button" size="sm" onClick={handleSave}>
               Save Changes
             </Button>
           </div>
