@@ -39,6 +39,7 @@ import EmailVerificationNotice from "./components/auth/EmailVerificationNotice";
 import CheckVerificationNotice from "./components/auth/CheckVerificationNotice";
 import VerifySuccess from "./components/auth/VerifySuccess";
 import VerifyEmail from "./components/auth/VerifyEmail";
+import { Navigate } from "react-router-dom";
 
 export default function App() {
    useEffect(() => {
@@ -51,7 +52,7 @@ export default function App() {
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
+            <Route index path="/" element={<Navigate to="/landing" replace />} />
             <Route path="/dashboard" element={<Home />} />
 
             {/* Others Page */}

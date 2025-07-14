@@ -7,7 +7,7 @@ import Button from "../ui/button/Button";
 import { appSetting } from "../../../appSetting";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { showLoginSuccess, showLoginError } from "../../utils/swalFire"; // sesuaikan path-nya
+import { showLoginSuccess } from "../../utils/swalFire"; // sesuaikan path-nya
 
 
 interface DecodedUser {
@@ -44,7 +44,7 @@ export default function SignInForm() {
     const data = await res.json();
 
     if (!res.ok) {
-    showLoginError(data.message);
+    navigate("/check-verify-email-notice");
     return;
   }
 
@@ -56,7 +56,7 @@ export default function SignInForm() {
     console.log("JWT Decoded:", decoded);
 
     // Tampilkan notifikasi sukses
-    showLoginSuccess(decoded.name);
+    await showLoginSuccess(decoded.name);
 
     // Arahkan user berdasarkan role
     switch (decoded.roles_code) {
