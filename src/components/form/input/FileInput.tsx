@@ -2,7 +2,7 @@ import { FC } from "react";
 
 interface FileInputProps {
   className?: string;
-  onChange: (base64: string) => void; // Ubah: kirim base64, bukan event
+  onChange: (base64: string) => void;
 }
 
 const FileInput: FC<FileInputProps> = ({ className = "", onChange }) => {
@@ -10,10 +10,31 @@ const FileInput: FC<FileInputProps> = ({ className = "", onChange }) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    // Validasi ukuran file (maksimum 1MB)
+    const maxSizeInMB = 1;
+    if (file.size > maxSizeInMB * 1024 * 1024) {
+      alert("Ukuran gambar maksimal 1MB");
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result?.toString() || "";
-      onChange(base64String);
+    reader.onload = () => {
+      const img = new Image();
+      img.src = reader.result as string;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const MAX_WIDTH = 400;
+        const scaleSize = MAX_WIDTH / img.width;
+        canvas.width = MAX_WIDTH;
+        canvas.height = img.height * scaleSize;
+
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const resizedBase64 = canvas.toDataURL("image/jpeg", 0.7); // quality 70%
+          onChange(resizedBase64);
+        }
+      };
     };
     reader.readAsDataURL(file);
   };

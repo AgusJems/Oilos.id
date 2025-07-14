@@ -185,16 +185,18 @@ export default function BeritaTable() {
                     {news.status === 1 ? "Active" : "Non Active"}
                   </Badge>
                 </TableCell>
-                <TableCell className="px-4 py-4 sm:px-6 text-gray-500 text-theme-sm dark:text-gray-400 text-center">
-                  {news.image && news.image !== "string" ? (
-                    <img
-                      src={news.image}
-                      alt={news.title}
-                      className="w-12 h-12 rounded object-cover"
-                    />
-                  ) : (
-                    <span className="text-xs text-gray-400 italic">No Image</span>
-                  )}
+                <TableCell className="px-4 py-4 sm:px-6 text-gray-500 text-theme-sm dark:text-gray-400">
+                  <div className="flex justify-center items-center h-full">
+                    {news.image && news.image !== "string" ? (
+                      <img
+                        src={news.image}
+                        alt={news.title}
+                        className="w-12 h-12 rounded object-cover"
+                      />
+                    ) : (
+                      <span className="text-xs text-gray-400 italic">No Image</span>
+                    )}
+                  </div>
                 </TableCell>
                 <TableCell className="px-4 py-4 sm:px-6">
                   <div className="flex justify-center gap-2">
