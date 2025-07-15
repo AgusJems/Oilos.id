@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import { fetchActiveNews, NewsItem } from "../components/data";
+import { fetchActiveNews, NewsItem } from "../components/newsData";
 
 const News: React.FC = () => {
   const [newsData, setNewsData] = useState<NewsItem[]>([]);

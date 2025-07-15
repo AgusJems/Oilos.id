@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoArrowBack } from 'react-icons/io5';
-import { fetchNewsById, NewsItem } from '../data';
+import { fetchNewsById, NewsItem } from '../newsData';
 import 'quill/dist/quill.core.css';
 import DOMPurify from 'dompurify';
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Link } from 'react-router-dom';
-import { fetchActiveNews, NewsItem } from '../data';
+import { fetchActiveNews, NewsItem } from '../newsData';
 
 const Berita: React.FC = () => {
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
