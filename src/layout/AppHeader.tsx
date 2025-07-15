@@ -116,7 +116,7 @@ const AppHeader: React.FC = () => {
             </svg>
           </button>
 
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <form>
               <div className="relative">
                 <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">
@@ -141,26 +141,23 @@ const AppHeader: React.FC = () => {
                   type="text"
                   placeholder="Search or type command..."
                   className="
-  w-full xl:w-[430px] h-11 rounded-lg 
-  border border-gray-200 dark:border-gray-800
-  bg-transparent dark:bg-white/[0.03]  // <- hanya satu dark:bg
-  text-sm text-gray-800 dark:text-white/90
-  placeholder:text-gray-400 dark:placeholder:text-white/30 
-  py-2.5 pl-12 pr-14 
-  shadow-theme-xs 
-  focus:outline-none focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 
-  dark:focus:border-brand-800
-"
-
-                />
-
+                    w-full xl:w-[430px] h-11 rounded-lg 
+                    border border-gray-200 dark:border-gray-800
+                    bg-transparent dark:bg-white/[0.03]  // <- hanya satu dark:bg
+                    text-sm text-gray-800 dark:text-white/90
+                    placeholder:text-gray-400 dark:placeholder:text-white/30 
+                    py-2.5 pl-12 pr-14 
+                    shadow-theme-xs 
+                    focus:outline-none focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 
+                    dark:focus:border-brand-800
+                  "/>
                 <button className="absolute right-2.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-400">
                   <span> ⌘ </span>
                   <span> K </span>
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
         <div
           className={`${
