@@ -172,7 +172,7 @@ export default function BeritaTable() {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
         <div className="p-4 text-end">
-          <Button onClick={openModal} className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+          <Button onClick={openModal} className="mb-4 px-4 py-2 bg-gradient-to-r from-green-500 to-green-400 hover:scale-105 duration-200 text-white">
             + Tambah Berita
           </Button>
         </div>
@@ -226,7 +226,7 @@ export default function BeritaTable() {
                 </TableCell>
                 <TableCell className="px-4 py-4 sm:px-6">
                   <div className="flex justify-center gap-2">
-                    <button onClick={() => handleEditNews(news)} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+                    <button onClick={() => handleEditNews(news)} className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gradient-to-r from-blue-500 to-blue-400 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
                     <svg
                       className="fill-current"
                       width="18"
@@ -244,7 +244,7 @@ export default function BeritaTable() {
                     </svg>
                     Edit
                   </button>
-                  <button onClick={() => handleDeleteNews(news.id)} className="flex w-full items-center justify-center gap-2 rounded-full border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 shadow-theme-xs hover:bg-red-500 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+                  <button onClick={() => handleDeleteNews(news.id)} className="flex w-full items-center justify-center gap-2 rounded-full border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 shadow-theme-xs hover:bg-gradient-to-r from-red-500 to-red-400 hover:text-white dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
                     <svg
                         className="fill-current"
                         width="18"
