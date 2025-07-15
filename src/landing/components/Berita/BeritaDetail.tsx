@@ -55,7 +55,7 @@ const BeritaDetail: React.FC = () => {
             />
           </div>
           <div
-            className="ql-editor"
+            className="ql-editor font-[Sans-serif] text-gray-500"
             dangerouslySetInnerHTML={{ __html: cleanAndSanitize(berita.description) }}
           />
         </div>

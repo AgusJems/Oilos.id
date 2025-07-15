@@ -172,7 +172,7 @@ export default function BeritaTable() {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
         <div className="p-4 text-end">
-          <Button onClick={openModal} className="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+          <Button onClick={openModal} className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
             + Tambah Berita
           </Button>
         </div>
@@ -196,7 +196,7 @@ export default function BeritaTable() {
                 </TableCell>
                 <TableCell className="px-4 py-4 sm:px-6 text-gray-500 text-theme-sm dark:text-gray-400">
                   <div
-                    className="prose prose-sm max-w-none dark:prose-invert"
+                    className="prose prose-sm max-w-none dark:prose-invert line-clamp-1"
                     dangerouslySetInnerHTML={{ __html: news.description }}
                   />
                 </TableCell>
@@ -308,7 +308,7 @@ export default function BeritaTable() {
         </div>
       </div>
     </div>
-    <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
+    <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[1000px] m-4">
       <div className="relative w-full p-4 overflow-y-auto bg-white rounded-3xl dark:bg-gray-900 lg:p-11">
         <div className="px-2 pr-14">
           <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
