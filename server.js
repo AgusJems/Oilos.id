@@ -13,6 +13,7 @@ import cityRoutes from './src/routes/city.routes.js';
 import rolesRoutes from './src/routes/roles.routes.js';
 import newsRoutes from './src/routes/news.routes.js';
 import testResultsRoutes from './src/routes/test-results.routes.js';
+import itemRoutes from './src/routes/item.routes.js';
 
 const envSetting = {
   secretKey: process.env.SECRET_KEY
@@ -40,6 +41,7 @@ app.use('/api', cityRoutes);
 app.use('/api', rolesRoutes);
 app.use('/api', newsRoutes);
 app.use('/api', testResultsRoutes);
+app.use('/api', itemRoutes);
 
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
