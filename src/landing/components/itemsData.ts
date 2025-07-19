@@ -1,12 +1,12 @@
 export interface ListBarangItem {
   id: number;
-  title: string;
+  name: string;
   description: string;
   image: string;
   price:number;
 }
 
-export const fetchActiveNews = async (): Promise<ListBarangItem[]> => {
+export const fetchActiveItem = async (): Promise<ListBarangItem[]> => {
   try {
     const res = await fetch("http://localhost:3001/api/getActiveItems");
     const result = await res.json();

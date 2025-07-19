@@ -41,6 +41,7 @@ import VerifySuccess from "./components/auth/VerifySuccess";
 import VerifyEmail from "./components/auth/VerifyEmail";
 import { Navigate } from "react-router-dom";
 import Product from "./landing/components/Product/Product";
+import ProductDetail from "./landing/components/Product/ProductDetail";
 
 export default function App() {
    useEffect(() => {
@@ -106,7 +107,8 @@ export default function App() {
             <Route path="/beritaland" element={<Berita />} />
             <Route path="/beritaland/:id" element={<BeritaDetail />} />
             <Route path="/hasilujiland" element={<HasilUji />} />
-            <Route path="/product" element={<Product />} />
+            <Route path="/productland" element={<Product />} />
+            <Route path="/productland/:id" element={<ProductDetail />} />
             <Route path="/orderland" element={<Order />} />
             <Route path="/orderland/:id" element={<OrderDetail />} />
             <Route path="/cart/:id" element={<CartPage />} />
