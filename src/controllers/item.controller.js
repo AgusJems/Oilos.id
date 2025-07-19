@@ -42,7 +42,7 @@ export const insertDetailItems = async (req, res) => {
   const { name, description, image, price } = req.body;
 
   try {
-    const words = username.split(" ");
+    const words = name.split(" ");
     let initial = "";
     for (const word of words) {
       if (word.length > 0) {
